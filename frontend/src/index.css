@@ -1,15 +1,14 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; /* el padding ya no suma tamaño extra a los elementos */
+  box-sizing: border-box;
 }
 
 body {
-  font-family: 'Inter', sans-serif; /* fuente por defecto para TODO el texto */
+  font-family: 'Inter', sans-serif;
   color: #0f2a4a;
 }
 
-/* --- a partir de aquí, tu CSS que ya tenías --- */
 
 .header {
   background-color: #f7c948;
@@ -28,13 +27,13 @@ body {
 .header-right {
   display: flex;
   align-items: center;
-  gap: 40px; /* espacio entre el menú y el botón Ingresar */
-}
+  gap: 40px;
+  }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;         /* espacio entre el ícono y la palabra "InDaga" */
+  gap: 10px;      
   font-family: 'Sora', sans-serif;
   font-weight: 700;
   font-size: 26px;
@@ -44,7 +43,7 @@ body {
 }
 
 .logo-icon {
-  height: 1em;      /* se ajusta automáticamente al tamaño de letra de "InDaga" */
+  height: 1em;   
   width: auto;
   display: block;
 }
@@ -109,8 +108,8 @@ body {
   border-radius: 10px;
   background-color: #eef1f5;
   font-size: 15px;
-  font-family: inherit; /* los inputs NO heredan la fuente del body por defecto; hay que forzarlo */
-}
+  font-family: inherit; 
+  }
 
 .buscador button {
   background-color: #f28b82;
@@ -122,7 +121,6 @@ body {
   cursor: pointer;
 }
 
-/* NUEVO: le faltaba estilo por completo */
 #oportunidades h2 {
   font-family: 'Sora', sans-serif;
   font-size: 28px;
@@ -170,7 +168,6 @@ body {
   min-height: 200px;
 }
 
-/* NUEVO: los textos dentro de la tarjeta tampoco tenían estilo propio */
 .card-oportunidad p {
   margin-bottom: 6px;
   font-size: 14px;
@@ -183,17 +180,16 @@ body {
 }
 
 .card-oportunidad .fecha {
-  font-family: 'JetBrains Mono', monospace; /* le da un toque "de datos" a la fecha, ya que la importaste y no la usabas en ningún lado */
+  font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
 }
 
-/* Los botones y links deben reaccionar al pasar el mouse — ahora mismo son estáticos */
 .nav a,
 .filtro,
 .btn-ingresar,
 .buscador button {
-  transition: all 0.2s ease; /* suaviza cualquier cambio de color/tamaño */
-}
+  transition: all 0.2s ease;
+  }
 
 .nav a:hover {
   color: #1E6FA8;
@@ -204,7 +200,7 @@ body {
 }
 
 .filtro--activo:hover {
-  background-color: #0f2a4a; /* que no cambie al pasar el mouse, ya está "activo" */
+  background-color: #0f2a4a;
 }
 
 .btn-ingresar:hover {
@@ -215,7 +211,6 @@ body {
   background-color: #ef7a70;
 }
 
-/* Las tarjetas se sienten más "vivas" con un pequeño efecto al pasar el mouse */
 .card-oportunidad {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -262,3 +257,130 @@ body {
 .sugerencias button:hover {
   background: #eef1f5;
 }
+
+.slogan {
+  background-color: #dbe9f6;
+  text-align: center;
+  padding: 80px 40px;
+}
+.slogan-texto {
+  font-family: 'Sora', sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  max-width: 800px;
+  margin: 0 auto 16px;
+}
+.slogan-remate {
+  font-family: 'Sora', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1E6FA8;
+}
+
+.como-funciona {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 64px 40px;
+  text-align: center;
+}
+.como-funciona h2 {
+  font-family: 'Sora', sans-serif;
+  font-size: 32px;
+  margin-bottom: 32px;
+}
+.pasos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+.paso {
+  background-color: #eef1f5;
+  border-radius: 12px;
+  padding: 28px 24px;
+}
+.paso-numero {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f7c948;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.paso h3 {
+  font-family: 'Sora', sans-serif;
+  margin-bottom: 8px;
+}
+
+.caminos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px 64px;
+}
+.camino {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  border-radius: 12px;
+  padding: 40px 32px;
+  color: white;
+}
+.camino h3 {
+  font-family: 'Sora', sans-serif;
+  font-size: 24px;
+}
+.camino--formacion { background-color: #406ea8; }
+.camino--empresa { background-color: #164a8c; }
+.camino a {
+  background-color: #f7c948;
+  color: #0f2a4a;
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.contacto {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 40px 72px;
+}
+.contacto h2 {
+  font-family: 'Sora', sans-serif;
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.contacto-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.contacto-form input,
+.contacto-form select,
+.contacto-form textarea {
+  padding: 14px 18px;
+  border: 2px solid #164a8c;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 15px;
+}
+.contacto-form button {
+  align-self: flex-end;
+  background-color: #164a8c;
+  color: white;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.contacto-form button:hover { background-color: #0f3a70; }
