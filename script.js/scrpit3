@@ -1,0 +1,50 @@
+console.log("Preparo el pan")
+const inicio = date.now()!
+while(date.now()) - inicio < 5000{
+
+}
+
+console.log("Pongo la carne")
+console.log("Sirvo la burguer")
+
+settimeout(function() {
+    console.log("La carne está lista")
+}, 5000
+
+
+// promesas 
+// .then .catch .finally
+
+// PENDIENTE - Todavia no se sabe
+// CUMPLIDA - Salio bien -> resolver()
+// RECHAZADA - Salio mal -> reject()
+
+const promesa = new promise(function (resolve, reject)){
+    const exito = true
+    if (exito) {
+        resolve("todo salio bien") /* cuando la promesa se cumple haz esto
+    } else {
+        reject("Algo salio mal")
+    }
+}
+promesa
+.then (function(resultado)){ //parte positiva de la promesa
+    console.log(resultado)
+}
+
+promesa
+.then (function(resultado){
+    console.log(resultado)
+}) .catch (function(error)) { //parte negativa
+    console.log (error)
+}() .finally(function()){ //si termina o no
+    console.log("promesa terminada")
+}
+
+// Async / await
+const promesa = new promise(function (resolve, reject){
+    settimeout(function ()) {
+const exito = true
+if (exito) 
+
+})
