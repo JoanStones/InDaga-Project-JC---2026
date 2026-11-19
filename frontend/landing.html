@@ -63,7 +63,48 @@
         text-decoration: none;
         flex-shrink: 0;
       }
-      .logo img { height: 1.1em; width: auto; }
+      .logo svg { height: 1.1em; width: auto; fill: var(--navy); flex-shrink: 0; }
+      .modal__logo svg { height: 1.2em; width: auto; fill: var(--navy); vertical-align: middle; }
+
+      /* ícono grande en la sección intro */
+      .intro__icon {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding: 40px;
+      }
+      .intro__icon svg {
+        width: 160px;
+        height: 160px;
+        fill: var(--navy);
+      }
+
+      /* palabras flotantes alrededor del ícono */
+      .intro__tag {
+        position: absolute;
+        background: var(--yellow);
+        color: var(--navy);
+        font-family: 'Sora', sans-serif;
+        font-weight: 700;
+        font-size: 11px;
+        padding: 5px 12px;
+        border-radius: 999px;
+        letter-spacing: .04em;
+        white-space: nowrap;
+        box-shadow: 0 2px 8px rgba(15,42,74,.10);
+        pointer-events: none;
+        user-select: none;
+      }
+
+      /* texto justificado global */
+      .intro__text p,
+      .fundadora-card__bio,
+      .section-contacto p {
+        text-align: justify;
+      }
 
       /* desktop links */
       .nav-links {
@@ -260,18 +301,14 @@
       .btn-login:hover { background: var(--navy); color: var(--white); }
 
       .intro__image {
-        background: var(--blue-light);
+        background: var(--white);
         border-radius: var(--radius);
         min-height: 300px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: 'Sora', sans-serif;
-        font-weight: 600;
-        font-size: 18px;
-        color: var(--white);
         overflow: hidden;
-        letter-spacing: .02em;
+        border: 2px solid #e8edf2;
       }
       .intro__image img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -577,7 +614,7 @@
         color: var(--navy);
         margin-bottom: 6px;
       }
-      .modal__logo img { height: 1.1em; }
+      .modal__logo svg { height: 1.2em; width: auto; fill: var(--navy); flex-shrink: 0; }
 
       .modal__title {
         font-family: 'Sora', sans-serif;
@@ -716,13 +753,25 @@
 
   <body>
 
+    <!-- SVG sprite oculto — ícono InDaga reutilizable en todo el documento -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+      <symbol id="icon-indaga" viewBox="0 0 462 463" preserveAspectRatio="xMidYMid meet">
+        <g transform="translate(-114.164693,496.584685) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
+          <path d="M3085 4956 c-168 -18 -316 -41 -490 -77 -154 -33 -365 -88 -378 -99 -7 -7 98 -387 112 -402 4 -4 49 4 101 18 564 155 1072 183 1495 85 498 -117 910 -434 1215 -935 71 -118 133 -236 195 -376 21 -47 39 -86 40 -88 1 -1 90 33 196 77 171 70 194 83 191 101 -4 37 -176 380 -252 505 -419 682 -984 1067 -1725 1175 -181 27 -518 34 -700 16z"/>
+          <path d="M2213 4223 c-24 -9 -13 -40 35 -104 342 -452 782 -1140 841 -1316 27 -81 28 -189 1 -274 -52 -168 -497 -870 -832 -1312 -62 -82 -69 -110 -28 -115 17 -2 268 128 795 411 424 227 1045 561 1380 741 336 180 618 337 627 349 25 32 23 90 -4 121 -13 13 -108 70 -213 126 -104 56 -217 117 -250 135 -33 18 -402 216 -820 440 -418 224 -782 420 -810 435 -209 116 -690 370 -699 369 -6 0 -17 -3 -23 -6z"/>
+          <path d="M1342 3631 c-87 -216 -148 -429 -178 -619 -21 -134 -30 -490 -15 -622 16 -140 55 -329 97 -470 40 -132 124 -350 135 -350 9 0 371 161 381 169 3 3 -9 44 -28 91 -69 171 -131 400 -154 575 -16 121 -13 396 5 521 28 191 83 386 159 563 20 47 34 86 33 88 -4 3 -206 99 -313 148 l-71 33 -51 -127z"/>
+          <path d="M5365 2438 c-3 -7 -20 -57 -40 -111 -237 -662 -609 -1139 -1065 -1368 -150 -75 -316 -129 -510 -166 -148 -27 -587 -25 -767 5 -155 26 -352 70 -477 106 -55 16 -92 22 -96 16 -12 -19 -122 -391 -117 -396 9 -10 251 -74 392 -104 415 -90 841 -104 1191 -40 709 130 1274 591 1654 1350 117 233 252 573 234 589 -9 8 -372 131 -387 131 -4 0 -10 -6 -12 -12z"/>
+        </g>
+      </symbol>
+    </svg>
+
     <!-- ══════════════════════════════════════════════════════
          NAV
     ══════════════════════════════════════════════════════ -->
     <header class="nav-top">
       <div class="nav-top__inner">
         <a href="#" class="logo">
-          <img src="./img/InDaga-Icon.svg" alt="InDaga logo" />
+          <svg aria-hidden="true" viewBox="0 0 462 463" xmlns="http://www.w3.org/2000/svg"><g transform="translate(-114.164693,496.584685) scale(0.100000,-0.100000)" fill="currentColor" stroke="none"><path d="M3085 4956 c-168 -18 -316 -41 -490 -77 -154 -33 -365 -88 -378 -99 -7 -7 98 -387 112 -402 4 -4 49 4 101 18 564 155 1072 183 1495 85 498 -117 910 -434 1215 -935 71 -118 133 -236 195 -376 21 -47 39 -86 40 -88 1 -1 90 33 196 77 171 70 194 83 191 101 -4 37 -176 380 -252 505 -419 682 -984 1067 -1725 1175 -181 27 -518 34 -700 16z"/><path d="M2213 4223 c-24 -9 -13 -40 35 -104 342 -452 782 -1140 841 -1316 27 -81 28 -189 1 -274 -52 -168 -497 -870 -832 -1312 -62 -82 -69 -110 -28 -115 17 -2 268 128 795 411 424 227 1045 561 1380 741 336 180 618 337 627 349 25 32 23 90 -4 121 -13 13 -108 70 -213 126 -104 56 -217 117 -250 135 -33 18 -402 216 -820 440 -418 224 -782 420 -810 435 -209 116 -690 370 -699 369 -6 0 -17 -3 -23 -6z"/><path d="M1342 3631 c-87 -216 -148 -429 -178 -619 -21 -134 -30 -490 -15 -622 16 -140 55 -329 97 -470 40 -132 124 -350 135 -350 9 0 371 161 381 169 3 3 -9 44 -28 91 -69 171 -131 400 -154 575 -16 121 -13 396 5 521 28 191 83 386 159 563 20 47 34 86 33 88 -4 3 -206 99 -313 148 l-71 33 -51 -127z"/><path d="M5365 2438 c-3 -7 -20 -57 -40 -111 -237 -662 -609 -1139 -1065 -1368 -150 -75 -316 -129 -510 -166 -148 -27 -587 -25 -767 5 -155 26 -352 70 -477 106 -55 16 -92 22 -96 16 -12 -19 -122 -391 -117 -396 9 -10 251 -74 392 -104 415 -90 841 -104 1191 -40 709 130 1274 591 1654 1350 117 233 252 573 234 589 -9 8 -372 131 -387 131 -4 0 -10 -6 -12 -12z"/></g></svg>
           InDaga
         </a>
 
@@ -786,7 +835,26 @@
             <button class="btn-login"    onclick="openModal('modalLogin')">Iniciar sesión</button>
           </div>
         </div>
-        <div class="intro__image">Imagen</div>
+        <div class="intro__image">
+          <div class="intro__icon" id="lavaContainer">
+            <span class="intro__tag" data-lava>Becas</span>
+            <span class="intro__tag" data-lava>Cursos</span>
+            <span class="intro__tag" data-lava>Oportunidades</span>
+            <span class="intro__tag" data-lava>Programas</span>
+            <span class="intro__tag" data-lava>Gratuito</span>
+            <span class="intro__tag" data-lava>Accesible</span>
+            <span class="intro__tag" data-lava>Becas</span>
+            <span class="intro__tag" data-lava>Formación</span>
+            <svg viewBox="0 0 462 463" xmlns="http://www.w3.org/2000/svg" aria-label="InDaga logo" style="position:relative;z-index:2;">
+              <g transform="translate(-114.164693,496.584685) scale(0.100000,-0.100000)" fill="#0f2a4a" stroke="none">
+                <path d="M3085 4956 c-168 -18 -316 -41 -490 -77 -154 -33 -365 -88 -378 -99 -7 -7 98 -387 112 -402 4 -4 49 4 101 18 564 155 1072 183 1495 85 498 -117 910 -434 1215 -935 71 -118 133 -236 195 -376 21 -47 39 -86 40 -88 1 -1 90 33 196 77 171 70 194 83 191 101 -4 37 -176 380 -252 505 -419 682 -984 1067 -1725 1175 -181 27 -518 34 -700 16z"/>
+                <path d="M2213 4223 c-24 -9 -13 -40 35 -104 342 -452 782 -1140 841 -1316 27 -81 28 -189 1 -274 -52 -168 -497 -870 -832 -1312 -62 -82 -69 -110 -28 -115 17 -2 268 128 795 411 424 227 1045 561 1380 741 336 180 618 337 627 349 25 32 23 90 -4 121 -13 13 -108 70 -213 126 -104 56 -217 117 -250 135 -33 18 -402 216 -820 440 -418 224 -782 420 -810 435 -209 116 -690 370 -699 369 -6 0 -17 -3 -23 -6z"/>
+                <path d="M1342 3631 c-87 -216 -148 -429 -178 -619 -21 -134 -30 -490 -15 -622 16 -140 55 -329 97 -470 40 -132 124 -350 135 -350 9 0 371 161 381 169 3 3 -9 44 -28 91 -69 171 -131 400 -154 575 -16 121 -13 396 5 521 28 191 83 386 159 563 20 47 34 86 33 88 -4 3 -206 99 -313 148 l-71 33 -51 -127z"/>
+                <path d="M5365 2438 c-3 -7 -20 -57 -40 -111 -237 -662 -609 -1139 -1065 -1368 -150 -75 -316 -129 -510 -166 -148 -27 -587 -25 -767 5 -155 26 -352 70 -477 106 -55 16 -92 22 -96 16 -12 -19 -122 -391 -117 -396 9 -10 251 -74 392 -104 415 -90 841 -104 1191 -40 709 130 1274 591 1654 1350 117 233 252 573 234 589 -9 8 -372 131 -387 131 -4 0 -10 -6 -12 -12z"/>
+              </g>
+            </svg>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -894,7 +962,6 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <a href="#" class="logo">
-            <img src="./img/InDaga-Icon.svg" alt="InDaga logo" />
             InDaga
           </a>
           <p>Becas, cursos y programas actualizados en un solo lugar. Hecho para quienes buscan crecer.</p>
@@ -944,7 +1011,7 @@
         <button class="modal__close" onclick="closeModal('modalLogin')" aria-label="Cerrar">✕</button>
 
         <div class="modal__logo">
-          <img src="./img/InDaga-Icon.svg" alt="" />
+          <svg aria-hidden="true" viewBox="0 0 462 463" xmlns="http://www.w3.org/2000/svg"><g transform="translate(-114.164693,496.584685) scale(0.100000,-0.100000)" fill="currentColor" stroke="none"><path d="M3085 4956 c-168 -18 -316 -41 -490 -77 -154 -33 -365 -88 -378 -99 -7 -7 98 -387 112 -402 4 -4 49 4 101 18 564 155 1072 183 1495 85 498 -117 910 -434 1215 -935 71 -118 133 -236 195 -376 21 -47 39 -86 40 -88 1 -1 90 33 196 77 171 70 194 83 191 101 -4 37 -176 380 -252 505 -419 682 -984 1067 -1725 1175 -181 27 -518 34 -700 16z"/><path d="M2213 4223 c-24 -9 -13 -40 35 -104 342 -452 782 -1140 841 -1316 27 -81 28 -189 1 -274 -52 -168 -497 -870 -832 -1312 -62 -82 -69 -110 -28 -115 17 -2 268 128 795 411 424 227 1045 561 1380 741 336 180 618 337 627 349 25 32 23 90 -4 121 -13 13 -108 70 -213 126 -104 56 -217 117 -250 135 -33 18 -402 216 -820 440 -418 224 -782 420 -810 435 -209 116 -690 370 -699 369 -6 0 -17 -3 -23 -6z"/><path d="M1342 3631 c-87 -216 -148 -429 -178 -619 -21 -134 -30 -490 -15 -622 16 -140 55 -329 97 -470 40 -132 124 -350 135 -350 9 0 371 161 381 169 3 3 -9 44 -28 91 -69 171 -131 400 -154 575 -16 121 -13 396 5 521 28 191 83 386 159 563 20 47 34 86 33 88 -4 3 -206 99 -313 148 l-71 33 -51 -127z"/><path d="M5365 2438 c-3 -7 -20 -57 -40 -111 -237 -662 -609 -1139 -1065 -1368 -150 -75 -316 -129 -510 -166 -148 -27 -587 -25 -767 5 -155 26 -352 70 -477 106 -55 16 -92 22 -96 16 -12 -19 -122 -391 -117 -396 9 -10 251 -74 392 -104 415 -90 841 -104 1191 -40 709 130 1274 591 1654 1350 117 233 252 573 234 589 -9 8 -372 131 -387 131 -4 0 -10 -6 -12 -12z"/></g></svg>
           InDaga
         </div>
         <h2 class="modal__title" id="loginTitle">Bienvenido de nuevo</h2>
@@ -977,7 +1044,7 @@
         <button class="modal__close" onclick="closeModal('modalRegistro')" aria-label="Cerrar">✕</button>
 
         <div class="modal__logo">
-          <img src="./img/InDaga-Icon.svg" alt="" />
+          <svg aria-hidden="true" viewBox="0 0 462 463" xmlns="http://www.w3.org/2000/svg"><g transform="translate(-114.164693,496.584685) scale(0.100000,-0.100000)" fill="currentColor" stroke="none"><path d="M3085 4956 c-168 -18 -316 -41 -490 -77 -154 -33 -365 -88 -378 -99 -7 -7 98 -387 112 -402 4 -4 49 4 101 18 564 155 1072 183 1495 85 498 -117 910 -434 1215 -935 71 -118 133 -236 195 -376 21 -47 39 -86 40 -88 1 -1 90 33 196 77 171 70 194 83 191 101 -4 37 -176 380 -252 505 -419 682 -984 1067 -1725 1175 -181 27 -518 34 -700 16z"/><path d="M2213 4223 c-24 -9 -13 -40 35 -104 342 -452 782 -1140 841 -1316 27 -81 28 -189 1 -274 -52 -168 -497 -870 -832 -1312 -62 -82 -69 -110 -28 -115 17 -2 268 128 795 411 424 227 1045 561 1380 741 336 180 618 337 627 349 25 32 23 90 -4 121 -13 13 -108 70 -213 126 -104 56 -217 117 -250 135 -33 18 -402 216 -820 440 -418 224 -782 420 -810 435 -209 116 -690 370 -699 369 -6 0 -17 -3 -23 -6z"/><path d="M1342 3631 c-87 -216 -148 -429 -178 -619 -21 -134 -30 -490 -15 -622 16 -140 55 -329 97 -470 40 -132 124 -350 135 -350 9 0 371 161 381 169 3 3 -9 44 -28 91 -69 171 -131 400 -154 575 -16 121 -13 396 5 521 28 191 83 386 159 563 20 47 34 86 33 88 -4 3 -206 99 -313 148 l-71 33 -51 -127z"/><path d="M5365 2438 c-3 -7 -20 -57 -40 -111 -237 -662 -609 -1139 -1065 -1368 -150 -75 -316 -129 -510 -166 -148 -27 -587 -25 -767 5 -155 26 -352 70 -477 106 -55 16 -92 22 -96 16 -12 -19 -122 -391 -117 -396 9 -10 251 -74 392 -104 415 -90 841 -104 1191 -40 709 130 1274 591 1654 1350 117 233 252 573 234 589 -9 8 -372 131 -387 131 -4 0 -10 -6 -12 -12z"/></g></svg>
           InDaga
         </div>
         <h2 class="modal__title" id="registroTitle">Crea tu cuenta</h2>
@@ -1489,6 +1556,106 @@
         }
       `;
       document.head.appendChild(style);
+
+      /* ═══════════════════════════════════════════════════════
+         13. LAVA LAMP — palabras flotantes con física suave
+      ═══════════════════════════════════════════════════════ */
+      const lavaContainer = document.getElementById('lavaContainer');
+      if (lavaContainer) {
+        const tags = [...lavaContainer.querySelectorAll('[data-lava]')];
+
+        // Espera a que el DOM pinte para leer dimensiones reales
+        requestAnimationFrame(() => {
+          const W = lavaContainer.offsetWidth;
+          const H = lavaContainer.offsetHeight;
+
+          // Inicializa cada tag con posición y velocidad aleatoria
+          const blobs = tags.map(el => {
+            const tw = el.offsetWidth  || 80;
+            const th = el.offsetHeight || 28;
+            // posición inicial: zona perimetral (evita el centro donde está el ícono)
+            const side = Math.floor(Math.random() * 4);
+            let x, y;
+            if (side === 0) { x = Math.random() * (W * 0.35);               y = Math.random() * H; }
+            else if (side === 1) { x = W - tw - Math.random() * (W * 0.35); y = Math.random() * H; }
+            else if (side === 2) { x = Math.random() * W;                   y = Math.random() * (H * 0.3); }
+            else                 { x = Math.random() * W;                   y = H - th - Math.random() * (H * 0.3); }
+
+            // velocidad base lenta + dirección aleatoria
+            const speed = 0.3 + Math.random() * 0.5;
+            const angle = Math.random() * Math.PI * 2;
+
+            el.style.position = 'absolute';
+            el.style.left     = x + 'px';
+            el.style.top      = y + 'px';
+            el.style.zIndex   = '3';
+
+            return {
+              el, tw, th,
+              x, y,
+              vx: Math.cos(angle) * speed,
+              vy: Math.sin(angle) * speed,
+              // zona "prohibida" = centro del contenedor (ícono)
+            };
+          });
+
+          const CX = W / 2;  // centro X
+          const CY = H / 2;  // centro Y
+          const DEAD_R = 90; // radio de zona protegida alrededor del ícono
+
+          function tick() {
+            const W2 = lavaContainer.offsetWidth;
+            const H2 = lavaContainer.offsetHeight;
+
+            blobs.forEach(b => {
+              b.x += b.vx;
+              b.y += b.vy;
+
+              // Rebote en bordes
+              if (b.x < 0)          { b.x = 0;          b.vx *= -1; }
+              if (b.x + b.tw > W2)  { b.x = W2 - b.tw;  b.vx *= -1; }
+              if (b.y < 0)          { b.y = 0;           b.vy *= -1; }
+              if (b.y + b.th > H2)  { b.y = H2 - b.th;  b.vy *= -1; }
+
+              // Repulsión del ícono central
+              const mx = b.x + b.tw / 2;
+              const my = b.y + b.th / 2;
+              const dx = mx - CX;
+              const dy = my - CY;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < DEAD_R) {
+                const force = (DEAD_R - dist) / DEAD_R * 0.4;
+                b.vx += (dx / dist) * force;
+                b.vy += (dy / dist) * force;
+              }
+
+              // Amortiguación suave (simula viscosidad)
+              b.vx *= 0.998;
+              b.vy *= 0.998;
+
+              // Velocidad mínima para que nunca se paren
+              const spd = Math.sqrt(b.vx * b.vx + b.vy * b.vy);
+              if (spd < 0.15) {
+                b.vx = (b.vx / (spd || 1)) * 0.2;
+                b.vy = (b.vy / (spd || 1)) * 0.2;
+              }
+              // Velocidad máxima
+              if (spd > 1.2) {
+                b.vx = (b.vx / spd) * 1.2;
+                b.vy = (b.vy / spd) * 1.2;
+              }
+
+              b.el.style.transform = `translate(${b.x}px, ${b.y}px)`;
+              b.el.style.left = '0';
+              b.el.style.top  = '0';
+            });
+
+            requestAnimationFrame(tick);
+          }
+
+          tick();
+        });
+      }
 
     })();
     </script>
