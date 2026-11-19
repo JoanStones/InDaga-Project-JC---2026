@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InDaga — Oportunidades en un solo lugar</title>
+    <meta name="description" content="Descubre becas, cursos y programas activos. Regístrate en InDaga y nunca más pierdas una oportunidad." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+    <style>
+      /* ─── Reset ─────────────────────────────────────────── */
+      *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+      /* ─── Tokens ─────────────────────────────────────────── */
+      :root {
+        --navy:       #0f2a4a;
+        --yellow:     #f7c948;
+        --blue:       #1E6FA8;
+        --blue-light: #7fa8c9;
+        --bg:         #f4f6f9;
+        --white:      #ffffff;
+        --text:       #0f2a4a;
+        --muted:      #5a7080;
+        --radius:     12px;
+      }
+
+      /* ─── Base ───────────────────────────────────────────── */
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: 'Inter', sans-serif;
+        color: var(--text);
+        background: var(--white);
+      }
+
+      /* ══════════════════════════════════════════════════════
+         NAV
+      ══════════════════════════════════════════════════════ */
+      .nav-top {
+        background: var(--yellow);
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        box-shadow: 0 2px 12px rgba(15,42,74,.10);
+      }
+      .nav-top__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 32px;
+        height: 64px;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: 'Sora', sans-serif;
+        font-weight: 700;
+        font-size: 22px;
+        color: var(--navy);
+        text-decoration: none;
+        flex-shrink: 0;
+      }
+      .logo svg { height: 1.1em; width: auto; fill: var(--navy); flex-shrink: 0; }
+      .modal__logo svg { height: 1.2em; width: auto; fill: var(--navy); vertical-align: middle; }
+
+      /* ícono grande en la sección intro */
+      .intro__icon {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding: 40px;
+      }
+      .intro__icon svg {
+        width: 160px;
+        height: 160px;
+        fill: var(--navy);
+      }
+
+      /* palabras flotantes alrededor del ícono */
+      .intro__tag {
+        position: absolute;
+        background: var(--yellow);
+        color: var(--navy);
+        font-family: 'Sora', sans-serif;
+        font-weight: 700;
+        font-size: 11px;
+        padding: 5px 12px;
+        border-radius: 999px;
+        letter-spacing: .04em;
+        white-space: nowrap;
+        box-shadow: 0 2px 8px rgba(15,42,74,.10);
+        pointer-events: none;
+        user-select: none;
+      }
+
+      /* texto justificado global */
+      .intro__text p,
+      .fundadora-card__bio,
+      .section-contacto p {
+        text-align: justify;
+      }
+
+      /* desktop links */
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        list-style: none;
+      }
+      .nav-links a {
+        display: flex;
+        align-items: center;
+        height: 64px;
+        padding: 0 16px;
+        text-decoration: none;
+        color: var(--navy);
+        font-weight: 600;
+        font-size: 14px;
+        border-bottom: 3px solid transparent;
+        transition: color .2s, border-color .2s;
+        white-space: nowrap;
+      }
+      .nav-links a:hover {
+        color: var(--blue);
+        border-bottom-color: var(--blue);
+      }
+
+      .btn-ingresar {
+        background: var(--navy);
+        color: var(--white) !important;
+        padding: 9px 22px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        flex-shrink: 0;
+        border: none;
+        cursor: pointer;
+        transition: background .2s;
+      }
+      .btn-ingresar:hover { background: #1a3f66; }
+
+      /* hamburger */
+      .nav-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 6px;
+        z-index: 201;
+      }
+      .nav-toggle span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: var(--navy);
+        border-radius: 2px;
+        transition: transform .3s, opacity .3s;
+      }
+
+      /* mobile drawer — hidden by default */
+      .nav-mobile {
+        display: none;              /* hidden on desktop */
+        flex-direction: column;
+        background: var(--yellow);
+        padding: 8px 24px 20px;
+        border-top: 1px solid rgba(15,42,74,.12);
+      }
+      .nav-mobile a {
+        text-decoration: none;
+        color: var(--navy);
+        font-weight: 600;
+        font-size: 15px;
+        padding: 13px 0;
+        border-bottom: 1px solid rgba(15,42,74,.08);
+      }
+      .nav-mobile a:last-of-type { border-bottom: none; }
+      .nav-mobile .btn-ingresar {
+        margin-top: 14px;
+        text-align: center;
+        display: block;
+        border-bottom: none;
+        padding: 12px 22px;
+      }
+
+      /* ══════════════════════════════════════════════════════
+         HERO
+      ══════════════════════════════════════════════════════ */
+      .hero {
+        position: relative;
+        min-height: 460px;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      }
+      .hero__bg {
+        position: absolute;
+        inset: 0;
+        background: url('https://images.unsplash.com/photo-1529070538774-1843cb3265df?w=1200&q=60') center/cover no-repeat;
+        opacity: .15;
+      }
+      .hero__content {
+        position: relative;
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 80px 32px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        text-align: right;
+        gap: 24px;
+      }
+      .hero__content p {
+        max-width: 500px;
+        font-size: 19px;
+        line-height: 1.7;
+        color: rgba(255,255,255,.92);
+      }
+      .btn-cta {
+        background: var(--yellow);
+        color: var(--navy);
+        padding: 14px 34px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 15px;
+        transition: transform .2s, box-shadow .2s;
+      }
+      .btn-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(247,201,72,.4);
+      }
+
+      /* ══════════════════════════════════════════════════════
+         NOSOTROS / INTRO
+      ══════════════════════════════════════════════════════ */
+      .intro {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 72px 32px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 56px;
+        align-items: center;
+      }
+      .intro__text h2 {
+        font-family: 'Sora', sans-serif;
+        font-size: 26px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: var(--navy);
+      }
+      .intro__text p {
+        font-size: 15px;
+        line-height: 1.8;
+        color: #2a4560;
+        margin-bottom: 28px;
+      }
+      .intro__actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .btn-register {
+        background: var(--navy);
+        color: var(--white);
+        padding: 10px 24px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        transition: background .2s;
+      }
+      .btn-register:hover { background: #1a3f66; }
+      .btn-login {
+        border: 2px solid var(--navy);
+        color: var(--navy);
+        padding: 10px 24px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        background: transparent;
+        cursor: pointer;
+        transition: background .2s, color .2s;
+      }
+      .btn-login:hover { background: var(--navy); color: var(--white); }
+
+      .intro__image {
+        background: var(--white);
+        border-radius: var(--radius);
+        min-height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border: 2px solid #e8edf2;
+      }
+      .intro__image img { width: 100%; height: 100%; object-fit: cover; }
+
+      /* ══════════════════════════════════════════════════════
+         OPORTUNIDADES
+      ══════════════════════════════════════════════════════ */
+      .section-oportunidades {
+        background: var(--bg);
+        padding: 72px 32px;
+      }
+      .section-title {
+        font-family: 'Sora', sans-serif;
+        font-size: 30px;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 48px;
+        color: var(--navy);
+      }
+      .oport-grid {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+      }
+      .oport-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+      }
+      .oport-icon { font-size: 30px; line-height: 1; }
+      .oport-card {
+        background: #2a4f7a;
+        border-radius: var(--radius);
+        min-height: 200px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 22px;
+        color: var(--white);
+        transition: transform .2s, box-shadow .2s;
+      }
+      .oport-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 28px rgba(15,42,74,.2);
+      }
+      .oport-card__tag {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        background: rgba(255,255,255,.18);
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 999px;
+        margin-bottom: 10px;
+        width: fit-content;
+      }
+      .oport-card__title {
+        font-family: 'Sora', sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 1.35;
+      }
+      .oport-card__sub {
+        font-size: 13px;
+        opacity: .75;
+        margin-top: 6px;
+        font-family: 'JetBrains Mono', monospace;
+      }
+
+      /* ══════════════════════════════════════════════════════
+         FUNDADORAS
+      ══════════════════════════════════════════════════════ */
+      .section-fundadoras {
+        padding: 72px 32px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .fundadoras-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 36px;
+      }
+      .fundadora-card {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .fundadora-card__photo {
+        background: var(--blue-light);
+        border-radius: var(--radius);
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .fundadora-card__photo img { width: 100%; height: 100%; object-fit: cover; }
+      .fundadora-card__photo .placeholder-icon { font-size: 44px; }
+      .fundadora-card__name {
+        font-family: 'Sora', sans-serif;
+        font-weight: 700;
+        font-size: 16px;
+        color: var(--navy);
+      }
+      .fundadora-card__bio {
+        font-size: 14px;
+        line-height: 1.75;
+        color: #2a4560;
+      }
+      .fundadora-card__redes {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .fundadora-card__redes span { color: var(--muted); }
+      .fundadora-card__redes a {
+        color: var(--blue);
+        text-decoration: none;
+        transition: color .2s;
+      }
+      .fundadora-card__redes a:hover { color: var(--navy); }
+
+      /* ══════════════════════════════════════════════════════
+         CONTACTO
+      ══════════════════════════════════════════════════════ */
+      .section-contacto {
+        background: var(--bg);
+        padding: 72px 32px 88px;
+      }
+      .contacto-form {
+        max-width: 580px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .contacto-form input,
+      .contacto-form textarea {
+        width: 100%;
+        padding: 14px 22px;
+        border: 2px solid #d0dbe6;
+        border-radius: 999px;
+        font-family: 'Inter', sans-serif;
+        font-size: 15px;
+        color: var(--text);
+        background: var(--white);
+        outline: none;
+        transition: border-color .2s, box-shadow .2s;
+      }
+      .contacto-form textarea {
+        border-radius: 20px;
+        resize: vertical;
+        min-height: 130px;
+      }
+      .contacto-form input:focus,
+      .contacto-form textarea:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(30,111,168,.12);
+      }
+      .contacto-form input::placeholder,
+      .contacto-form textarea::placeholder { color: #9baebb; }
+      .btn-enviar {
+        align-self: flex-end;
+        background: var(--navy);
+        color: var(--white);
+        padding: 13px 38px;
+        border-radius: 999px;
+        border: none;
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background .2s, transform .2s;
+      }
+      .btn-enviar:hover { background: #1a3f66; transform: translateY(-2px); }
+
+      /* ══════════════════════════════════════════════════════
+         FOOTER
+      ══════════════════════════════════════════════════════ */
+      .footer {
+        background: var(--navy);
+        padding: 52px 32px 28px;
+      }
+      .footer__inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 40px;
+        padding-bottom: 36px;
+        border-bottom: 1px solid rgba(255,255,255,.1);
+        flex-wrap: wrap;
+      }
+      .footer__brand .logo {
+        color: var(--white);
+        margin-bottom: 12px;
+        display: inline-flex;
+      }
+      .footer__brand p {
+        font-size: 13px;
+        color: rgba(255,255,255,.5);
+        line-height: 1.65;
+        max-width: 260px;
+      }
+      .footer__social {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 12px;
+      }
+      .footer__social-label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,.35);
+      }
+      .footer__social-links { display: flex; gap: 10px; }
+      .footer__social-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.08);
+        color: var(--white);
+        text-decoration: none;
+        transition: background .2s, transform .2s, color .2s;
+      }
+      .footer__social-links a:hover {
+        background: var(--yellow);
+        color: var(--navy);
+        transform: translateY(-2px);
+      }
+      .footer__bottom {
+        max-width: 1100px;
+        margin: 22px auto 0;
+      }
+      .footer__copy {
+        font-size: 12px;
+        color: rgba(255,255,255,.3);
+      }
+
+      /* ══════════════════════════════════════════════════════
+         MODALES (Login / Registro)
+      ══════════════════════════════════════════════════════ */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(10,20,36,.55);
+        backdrop-filter: blur(4px);
+        z-index: 500;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .modal-overlay.active { display: flex; }
+
+      .modal {
+        background: var(--white);
+        border-radius: 20px;
+        padding: 40px 36px 36px;
+        width: 100%;
+        max-width: 420px;
+        position: relative;
+        box-shadow: 0 24px 60px rgba(10,20,36,.22);
+        animation: modalIn .25s ease;
+      }
+      @keyframes modalIn {
+        from { opacity: 0; transform: translateY(16px) scale(.97); }
+        to   { opacity: 1; transform: translateY(0)  scale(1); }
+      }
+
+      .modal__close {
+        position: absolute;
+        top: 16px;
+        right: 18px;
+        background: none;
+        border: none;
+        font-size: 22px;
+        color: var(--muted);
+        cursor: pointer;
+        line-height: 1;
+        padding: 4px;
+        transition: color .2s;
+      }
+      .modal__close:hover { color: var(--navy); }
+
+      .modal__logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: 'Sora', sans-serif;
+        font-weight: 700;
+        font-size: 20px;
+        color: var(--navy);
+        margin-bottom: 6px;
+      }
+      .modal__logo svg { height: 1.2em; width: auto; fill: var(--navy); flex-shrink: 0; }
+
+      .modal__title {
+        font-family: 'Sora', sans-serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--navy);
+        margin-bottom: 4px;
+      }
+      .modal__subtitle {
+        font-size: 14px;
+        color: var(--muted);
+        margin-bottom: 28px;
+      }
+
+      .modal-form {
+        display: flex;
+        flex-direction: column;
+        gap: 13px;
+      }
+      .modal-form label {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--navy);
+        margin-bottom: 4px;
+        display: block;
+      }
+      .modal-form input {
+        width: 100%;
+        padding: 12px 18px;
+        border: 2px solid #d0dbe6;
+        border-radius: 999px;
+        font-family: 'Inter', sans-serif;
+        font-size: 15px;
+        color: var(--text);
+        outline: none;
+        transition: border-color .2s, box-shadow .2s;
+      }
+      .modal-form input:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(30,111,168,.12);
+      }
+      .modal-form input::placeholder { color: #9baebb; }
+
+      .modal-form__row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .modal-form .btn-submit {
+        width: 100%;
+        background: var(--navy);
+        color: var(--white);
+        padding: 13px;
+        border-radius: 999px;
+        border: none;
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+        margin-top: 6px;
+        transition: background .2s, transform .2s;
+      }
+      .modal-form .btn-submit:hover { background: #1a3f66; transform: translateY(-1px); }
+
+      .modal__switch {
+        text-align: center;
+        margin-top: 18px;
+        font-size: 13.5px;
+        color: var(--muted);
+      }
+      .modal__switch a {
+        color: var(--blue);
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .modal__switch a:hover { text-decoration: underline; }
+
+      .modal__divider {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 18px 0;
+        color: #b0bec5;
+        font-size: 12px;
+      }
+      .modal__divider::before,
+      .modal__divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: #e0e8f0;
+      }
+
+      /* ══════════════════════════════════════════════════════
+         RESPONSIVE
+      ══════════════════════════════════════════════════════ */
+      @media (max-width: 900px) {
+        .oport-grid { grid-template-columns: 1fr 1fr; }
+      }
+
+      @media (max-width: 768px) {
+        /* nav */
+        .nav-top__inner { padding: 0 20px; }
+        .nav-links { display: none; }           /* hide desktop links */
+        .nav-top > .nav-top__inner .btn-ingresar { display: none; }
+        .nav-toggle { display: flex; }
+
+        /* sections */
+        .hero__content { padding: 60px 20px; align-items: flex-start; text-align: left; }
+        .hero__content p { font-size: 17px; }
+        .intro { grid-template-columns: 1fr; padding: 48px 20px; gap: 32px; }
+        .intro__image { min-height: 220px; }
+        .section-oportunidades { padding: 52px 20px; }
+        .oport-grid { grid-template-columns: 1fr; gap: 20px; }
+        .section-fundadoras { padding: 52px 20px; }
+        .fundadoras-grid { grid-template-columns: 1fr; }
+        .section-contacto { padding: 52px 20px 68px; }
+        .footer { padding: 40px 20px 24px; }
+        .footer__inner { flex-direction: column; gap: 28px; }
+        .footer__social { align-items: flex-start; }
+
+        /* modal */
+        .modal { padding: 32px 24px 28px; }
+        .modal-form__row { grid-template-columns: 1fr; }
+      }
+
+      @media (max-width: 480px) {
+        .intro__actions { flex-direction: column; align-items: flex-start; }
+        .btn-register, .btn-login { width: 100%; text-align: center; }
+        .oport-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- SVG sprite oculto — ícono InDaga reutilizable en todo el documento -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+      <symbol id="icon-indaga" viewBox="0 0 462 463" preserveAspectRatio="xMidYMid meet">
+        <g transform="translate(-114.164693,496.584685) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
+          <path d="M3085 4956 c-168 -18 -316 -41 -490 -77 -154 -33 -365 -88 -378 -99 -7 -7 98 -387 112 -402 4 -4 49 4 101 18 564 155 1072 183 1495 85 498 -117 910 -434 1215 -935 71 -118 133 -236 195 -376 21 -47 39 -86 40 -88 1 -1 90 33 196 77 171 70 194 83 191 101 -4 37 -176 380 -252 505 -419 682 -984 1067 -1725 1175 -181 27 -518 34 -700 16z"/>
+          <path d="M2213 4223 c-24 -9 -13 -40 35 -104 342 -452 782 -1140 841 -1316 27 -81 28 -189 1 -274 -52 -168 -497 -870 -832 -1312 -62 -82 -69 -110 -28 -115 17 -2 268 128 795 411 424 227 1045 561 1380 741 336 180 618 337 627 349 25 32 23 90 -4 121 -13 13 -108 70 -213 126 -104 56 -217 117 -250 135 -33 18 -402 216 -820 440 -418 224 -782 420 -810 435 -209 116 -690 370 -699 369 -6 0 -17 -3 -23 -6z"/>
+          <path d="M1342 3631 c-87 -216 -148 -429 -178 -619 -21 -134 -30 -490 -15 -622 16 -140 55 -329 97 -470 40 -132 124 -350 135 -350 9 0 371 161 381 169 3 3 -9 44 -28 91 -69 171 -131 400 -154 575 -16 121 -13 396 5 521 28 191 83 386 159 563 20 47 34 86 33 88 -4 3 -206 99 -313 148 l-71 33 -51 -127z"/>
+          <path d="M5365 2438 c-3 -7 -20 -57 -40 -111 -237 -662 -609 -1139 -1065 -1368 -150 -75 -316 -129 -510 -166 -148 -27 -587 -25 -767 5 -155 26 -352 70 -477 106 -55 16 -92 22 -96 16 -12 -19 -122 -391 -117 -396 9 -10 251 -74 392 -104 415 -90 841 -104 1191 -40 709 130 1274 591 1654 1350 117 233 252 573 234 589 -9 8 -372 131 -387 131 -4 0 -10 -6 -12 -12z"/>
+        </g>
+      </symbol>
+    </svg>
+
+    <!-- ══════════════════════════════════════════════════════
+         NAV
+    ══════════════════════════════════════════════════════ -->
+    <header class="nav-top">
+      <div class="nav-top__inner">
+        <a href="#" class="logo">
+          <svg aria-hidden="true" viewBox="0 0 462 463" xmlns="http://www.w3.org/2000/svg"><g transform="translate(-114.164693,496.584685) scale(0.100000,-0.100000)" fill="currentColor" stroke="none"><path d="M3085 4956 c-168 -18 -316 -41 -490 -77 -154 -33 -365 -88 -378 -99 -7 -7 98 -387 112 -402 4 -4 49 4 101 18 564 155 1072 183 1495 85 498 -117 910 -434 1215 -935 71 -118 133 -236 195 -376 21 -47 39 -86 40 -88 1 -1 90 33 196 77 171 70 194 83 191 101 -4 37 -176 380 -252 505 -419 682 -984 1067 -1725 1175 -181 27 -518 34 -700 16z"/><path d="M2213 4223 c-24 -9 -13 -40 35 -104 342 -452 782 -1140 841 -1316 27 -81 28 -189 1 -274 -52 -168 -497 -870 -832 -1312 -62 -82 -69 -110 -28 -115 17 -2 268 128 795 411 424 227 1045 561 1380 741 336 180 618 337 627 349 25 32 23 90 -4 121 -13 13 -108 70 -213 126 -104 56 -217 117 -250 135 -33 18 -402 216 -820 440 -418 224 -782 420 -810 435 -209 116 -690 370 -699 369 -6 0 -17 -3 -23 -6z"/><path d="M1342 3631 c-87 -216 -148 -429 -178 -619 -21 -134 -30 -490 -15 -622 16 -140 55 -329 97 -470 40 -132 124 -350 135 -350 9 0 371 161 381 169 3 3 -9 44 -28 91 -69 171 -131 400 -154 575 -16 121 -13 396 5 521 28 191 83 386 159 563 20 47 34 86 33 88 -4 3 -206 99 -313 148 l-71 33 -51 -127z"/><path d="M5365 2438 c-3 -7 -20 -57 -40 -111 -237 -662 -609 -1139 -1065 -1368 -150 -75 -316 -129 -510 -166 -148 -27 -587 -25 -767 5 -155 26 -352 70 -477 106 -55 16 -92 22 -96 16 -12 -19 -122 -391 -117 -396 9 -10 251 -74 392 -104 415 -90 841 -104 1191 -40 709 130 1274 591 1654 1350 117 233 252 573 234 589 -9 8 -372 131 -387 131 -4 0 -10 -6 -12 -12z"/></g></svg>
+          InDaga
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#oportunidades">Oportunidades</a></li>
+          <li><a href="#fundadoras">Fundadoras</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+
+        <button class="btn-ingresar" onclick="openModal('modalLogin')">Ingresar</button>
+
+        <button class="nav-toggle" aria-label="Abrir menú" onclick="toggleMenu(this)">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+      <!-- Mobile drawer — only visible when .open is toggled -->
+      <nav class="nav-mobile" id="navMobile">
+        <a href="#nosotros"      onclick="closeMobileMenu()">Nosotros</a>
+        <a href="#oportunidades" onclick="closeMobileMenu()">Oportunidades</a>
+        <a href="#fundadoras"    onclick="closeMobileMenu()">Fundadoras</a>
+        <a href="#contacto"      onclick="closeMobileMenu()">Contacto</a>
+        <a href="#" class="btn-ingresar" onclick="closeMobileMenu(); openModal('modalLogin'); return false;">Ingresar</a>
+      </nav>
+    </header>
+
+    <!-- ══════════════════════════════════════════════════════
+         HERO
+    ══════════════════════════════════════════════════════ -->
+    <section class="hero">
+      <div class="hero__bg"></div>
+      <div class="hero__content">
+        <p>
+          Becas, cursos y programas actualizados en un solo lugar.
+          InDaga centraliza las oportunidades para que puedas enfocarte
+          en lo que importa: postular y crecer.
+        </p>
+        <a href="#nosotros" class="btn-cta">Conoce más</a>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         NOSOTROS / INTRO
+    ══════════════════════════════════════════════════════ -->
+    <section id="nosotros">
+      <div class="intro">
+        <div class="intro__text">
+          <h2>¿Qué es InDaga?</h2>
+          <p>
+            InDaga nació para cerrar la brecha de información entre las personas
+            y las oportunidades que existen en su entorno. Recopilamos becas,
+            cursos, voluntariados y programas de formación en tiempo real,
+            los filtramos por relevancia y te los presentamos de forma clara.
+            No importa en qué etapa estés: aquí siempre hay algo para ti.
+            Nuestra plataforma es gratuita, accesible y construida por personas
+            que entienden lo que significa buscar una oportunidad.
+          </p>
+          <div class="intro__actions">
+            <button class="btn-register" onclick="openModal('modalRegistro')">Registrarse</button>
+            <button class="btn-login"    onclick="openModal('modalLogin')">Iniciar sesión</button>
+          </div>
+        </div>
+        <div class="intro__image">
+          <div class="intro__icon" id="lavaContainer">
+            <span class="intro__tag" data-lava>Becas</span>
+            <span class="intro__tag" data-lava>Cursos</span>
+            <span class="intro__tag" data-lava>Oportunidades</span>
+            <span class="intro__tag" data-lava>Programas</span>
+            <span class="intro__tag" data-lava>Gratuito</span>
+            <span class="intro__tag" data-lava>Accesible</span>
+            <span class="intro__tag" data-lava>Becas</span>
+            <span class="intro__tag" data-lava>Formación</span>
+            <svg viewBox="0 0 462 463" xmlns="http://www.w3.org/2000/svg" aria-label="InDaga logo" style="position:relative;z-index:2;">
+              <g transform="translate(-114.164693,496.584685) scale(0.100000,-0.100000)" fill="#0f2a4a" stroke="none">
+                <path d="M3085 4956 c-168 -18 -316 -41 -490 -77 -154 -33 -365 -88 -378 -99 -7 -7 98 -387 112 -402 4 -4 49 4 101 18 564 155 1072 183 1495 85 498 -117 910 -434 1215 -935 71 -118 133 -236 195 -376 21 -47 39 -86 40 -88 1 -1 90 33 196 77 171 70 194 83 191 101 -4 37 -176 380 -252 505 -419 682 -984 1067 -1725 1175 -181 27 -518 34 -700 16z"/>
+                <path d="M2213 4223 c-24 -9 -13 -40 35 -104 342 -452 782 -1140 841 -1316 27 -81 28 -189 1 -274 -52 -168 -497 -870 -832 -1312 -62 -82 -69 -110 -28 -115 17 -2 268 128 795 411 424 227 1045 561 1380 741 336 180 618 337 627 349 25 32 23 90 -4 121 -13 13 -108 70 -213 126 -104 56 -217 117 -250 135 -33 18 -402 216 -820 440 -418 224 -782 420 -810 435 -209 116 -690 370 -699 369 -6 0 -17 -3 -23 -6z"/>
+                <path d="M1342 3631 c-87 -216 -148 -429 -178 -619 -21 -134 -30 -490 -15 -622 16 -140 55 -329 97 -470 40 -132 124 -350 135 -350 9 0 371 161 381 169 3 3 -9 44 -28 91 -69 171 -131 400 -154 575 -16 121 -13 396 5 521 28 191 83 386 159 563 20 47 34 86 33 88 -4 3 -206 99 -313 148 l-71 33 -51 -127z"/>
+                <path d="M5365 2438 c-3 -7 -20 -57 -40 -111 -237 -662 -609 -1139 -1065 -1368 -150 -75 -316 -129 -510 -166 -148 -27 -587 -25 -767 5 -155 26 -352 70 -477 106 -55 16 -92 22 -96 16 -12 -19 -122 -391 -117 -396 9 -10 251 -74 392 -104 415 -90 841 -104 1191 -40 709 130 1274 591 1654 1350 117 233 252 573 234 589 -9 8 -372 131 -387 131 -4 0 -10 -6 -12 -12z"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         OPORTUNIDADES
+    ══════════════════════════════════════════════════════ -->
+    <section id="oportunidades" class="section-oportunidades">
+      <h2 class="section-title">Oportunidades</h2>
+      <div class="oport-grid">
+
+        <div class="oport-col">
+          <span class="oport-icon">💡</span>
+          <div class="oport-card">
+            <span class="oport-card__tag">Becas</span>
+            <p class="oport-card__title">Becas de investigación Senacyt</p>
+            <p class="oport-card__sub">Vence: 30 sep 2026</p>
+          </div>
+        </div>
+
+        <div class="oport-col">
+          <span class="oport-icon">💡</span>
+          <div class="oport-card">
+            <span class="oport-card__tag">Cursos</span>
+            <p class="oport-card__title">Certificación en Datos — Google</p>
+            <p class="oport-card__sub">Inscripción abierta</p>
+          </div>
+        </div>
+
+        <div class="oport-col">
+          <span class="oport-icon">💡</span>
+          <div class="oport-card">
+            <span class="oport-card__tag">Programas</span>
+            <p class="oport-card__title">Jóvenes con Futuro — MIDES</p>
+            <p class="oport-card__sub">Inicia: 15 ago 2026</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         FUNDADORAS
+    ══════════════════════════════════════════════════════ -->
+    <section id="fundadoras">
+      <div class="section-fundadoras">
+        <h2 class="section-title">Fundadoras</h2>
+        <div class="fundadoras-grid">
+
+          <div class="fundadora-card">
+            <div class="fundadora-card__photo">
+              <span class="placeholder-icon">👤</span>
+            </div>
+            <p class="fundadora-card__name">Nombre Fundadora</p>
+            <p class="fundadora-card__bio">
+              Apasionada por la tecnología y la educación, cofundó InDaga
+              con la misión de democratizar el acceso a la información sobre
+              oportunidades en Panamá y la región.
+            </p>
+            <div class="fundadora-card__redes">
+              <span>Redes:</span>
+              <a href="#">LinkedIn</a>
+              <a href="#">Instagram</a>
+            </div>
+          </div>
+
+          <div class="fundadora-card">
+            <div class="fundadora-card__photo">
+              <span class="placeholder-icon">👤</span>
+            </div>
+            <p class="fundadora-card__name">Nombre Fundadora</p>
+            <p class="fundadora-card__bio">
+              Diseñadora e investigadora social. Creyó desde el primer día
+              que la mejor forma de cambiar el mundo es conectar a las personas
+              con las herramientas que ya existen para ellas.
+            </p>
+            <div class="fundadora-card__redes">
+              <span>Redes:</span>
+              <a href="#">LinkedIn</a>
+              <a href="#">Instagram</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         CONTACTO
+    ══════════════════════════════════════════════════════ -->
+    <section id="contacto" class="section-contacto">
+      <h2 class="section-title">Contáctanos</h2>
+      <form class="contacto-form" onsubmit="handleSubmit(event)">
+        <input type="text"  placeholder="Nombre completo"    required />
+        <input type="email" placeholder="Correo electrónico" required />
+        <input type="text"  placeholder="Asunto"             required />
+        <textarea           placeholder="Escribe tu mensaje…" required></textarea>
+        <button type="submit" class="btn-enviar">Enviar mensaje</button>
+      </form>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         FOOTER
+    ══════════════════════════════════════════════════════ -->
+    <footer class="footer">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <a href="#" class="logo">
+            InDaga
+          </a>
+          <p>Becas, cursos y programas actualizados en un solo lugar. Hecho para quienes buscan crecer.</p>
+        </div>
+
+        <div class="footer__social">
+          <span class="footer__social-label">Síguenos</span>
+          <div class="footer__social-links">
+            <a href="#" aria-label="Instagram">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/>
+                <rect x="2" y="9" width="4" height="12"/>
+                <circle cx="4" cy="4" r="2"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="Facebook">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="X / Twitter">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span class="footer__copy">© 2026 InDaga. Todos los derechos reservados.</span>
+      </div>
+    </footer>
+
+    <!-- ══════════════════════════════════════════════════════
+         MODAL — INICIAR SESIÓN
+    ══════════════════════════════════════════════════════ -->
+    <div class="modal-overlay" id="modalLogin" onclick="overlayClose(event, 'modalLogin')">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+        <button class="modal__close" onclick="closeModal('modalLogin')" aria-label="Cerrar">✕</button>
+
+        <div class="modal__logo">
+          <svg aria-hidden="true" viewBox="0 0 462 463" xmlns="http://www.w3.org/2000/svg"><g transform="translate(-114.164693,496.584685) scale(0.100000,-0.100000)" fill="currentColor" stroke="none"><path d="M3085 4956 c-168 -18 -316 -41 -490 -77 -154 -33 -365 -88 -378 -99 -7 -7 98 -387 112 -402 4 -4 49 4 101 18 564 155 1072 183 1495 85 498 -117 910 -434 1215 -935 71 -118 133 -236 195 -376 21 -47 39 -86 40 -88 1 -1 90 33 196 77 171 70 194 83 191 101 -4 37 -176 380 -252 505 -419 682 -984 1067 -1725 1175 -181 27 -518 34 -700 16z"/><path d="M2213 4223 c-24 -9 -13 -40 35 -104 342 -452 782 -1140 841 -1316 27 -81 28 -189 1 -274 -52 -168 -497 -870 -832 -1312 -62 -82 -69 -110 -28 -115 17 -2 268 128 795 411 424 227 1045 561 1380 741 336 180 618 337 627 349 25 32 23 90 -4 121 -13 13 -108 70 -213 126 -104 56 -217 117 -250 135 -33 18 -402 216 -820 440 -418 224 -782 420 -810 435 -209 116 -690 370 -699 369 -6 0 -17 -3 -23 -6z"/><path d="M1342 3631 c-87 -216 -148 -429 -178 -619 -21 -134 -30 -490 -15 -622 16 -140 55 -329 97 -470 40 -132 124 -350 135 -350 9 0 371 161 381 169 3 3 -9 44 -28 91 -69 171 -131 400 -154 575 -16 121 -13 396 5 521 28 191 83 386 159 563 20 47 34 86 33 88 -4 3 -206 99 -313 148 l-71 33 -51 -127z"/><path d="M5365 2438 c-3 -7 -20 -57 -40 -111 -237 -662 -609 -1139 -1065 -1368 -150 -75 -316 -129 -510 -166 -148 -27 -587 -25 -767 5 -155 26 -352 70 -477 106 -55 16 -92 22 -96 16 -12 -19 -122 -391 -117 -396 9 -10 251 -74 392 -104 415 -90 841 -104 1191 -40 709 130 1274 591 1654 1350 117 233 252 573 234 589 -9 8 -372 131 -387 131 -4 0 -10 -6 -12 -12z"/></g></svg>
+          InDaga
+        </div>
+        <h2 class="modal__title" id="loginTitle">Bienvenido de nuevo</h2>
+        <p class="modal__subtitle">Ingresa tu correo y contraseña para continuar.</p>
+
+        <form class="modal-form" onsubmit="submitLogin(event)">
+          <div>
+            <label for="loginEmail">Correo electrónico</label>
+            <input type="email" id="loginEmail" placeholder="correo@ejemplo.com" required />
+          </div>
+          <div>
+            <label for="loginPass">Contraseña</label>
+            <input type="password" id="loginPass" placeholder="••••••••" required />
+          </div>
+          <button type="submit" class="btn-submit">Iniciar sesión</button>
+        </form>
+
+        <p class="modal__switch">
+          ¿No tienes cuenta?
+          <a onclick="switchModal('modalLogin','modalRegistro')">Regístrate gratis</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         MODAL — REGISTRO
+    ══════════════════════════════════════════════════════ -->
+    <div class="modal-overlay" id="modalRegistro" onclick="overlayClose(event, 'modalRegistro')">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="registroTitle">
+        <button class="modal__close" onclick="closeModal('modalRegistro')" aria-label="Cerrar">✕</button>
+
+        <div class="modal__logo">
+          <svg aria-hidden="true" viewBox="0 0 462 463" xmlns="http://www.w3.org/2000/svg"><g transform="translate(-114.164693,496.584685) scale(0.100000,-0.100000)" fill="currentColor" stroke="none"><path d="M3085 4956 c-168 -18 -316 -41 -490 -77 -154 -33 -365 -88 -378 -99 -7 -7 98 -387 112 -402 4 -4 49 4 101 18 564 155 1072 183 1495 85 498 -117 910 -434 1215 -935 71 -118 133 -236 195 -376 21 -47 39 -86 40 -88 1 -1 90 33 196 77 171 70 194 83 191 101 -4 37 -176 380 -252 505 -419 682 -984 1067 -1725 1175 -181 27 -518 34 -700 16z"/><path d="M2213 4223 c-24 -9 -13 -40 35 -104 342 -452 782 -1140 841 -1316 27 -81 28 -189 1 -274 -52 -168 -497 -870 -832 -1312 -62 -82 -69 -110 -28 -115 17 -2 268 128 795 411 424 227 1045 561 1380 741 336 180 618 337 627 349 25 32 23 90 -4 121 -13 13 -108 70 -213 126 -104 56 -217 117 -250 135 -33 18 -402 216 -820 440 -418 224 -782 420 -810 435 -209 116 -690 370 -699 369 -6 0 -17 -3 -23 -6z"/><path d="M1342 3631 c-87 -216 -148 -429 -178 -619 -21 -134 -30 -490 -15 -622 16 -140 55 -329 97 -470 40 -132 124 -350 135 -350 9 0 371 161 381 169 3 3 -9 44 -28 91 -69 171 -131 400 -154 575 -16 121 -13 396 5 521 28 191 83 386 159 563 20 47 34 86 33 88 -4 3 -206 99 -313 148 l-71 33 -51 -127z"/><path d="M5365 2438 c-3 -7 -20 -57 -40 -111 -237 -662 -609 -1139 -1065 -1368 -150 -75 -316 -129 -510 -166 -148 -27 -587 -25 -767 5 -155 26 -352 70 -477 106 -55 16 -92 22 -96 16 -12 -19 -122 -391 -117 -396 9 -10 251 -74 392 -104 415 -90 841 -104 1191 -40 709 130 1274 591 1654 1350 117 233 252 573 234 589 -9 8 -372 131 -387 131 -4 0 -10 -6 -12 -12z"/></g></svg>
+          InDaga
+        </div>
+        <h2 class="modal__title" id="registroTitle">Crea tu cuenta</h2>
+        <p class="modal__subtitle">Es gratis. Encuentra tu próxima oportunidad hoy.</p>
+
+        <form class="modal-form" onsubmit="submitRegistro(event)">
+          <div class="modal-form__row">
+            <div>
+              <label for="regNombre">Nombre</label>
+              <input type="text" id="regNombre" placeholder="Ana" required />
+            </div>
+            <div>
+              <label for="regApellido">Apellido</label>
+              <input type="text" id="regApellido" placeholder="García" required />
+            </div>
+          </div>
+          <div>
+            <label for="regEmail">Correo electrónico</label>
+            <input type="email" id="regEmail" placeholder="correo@ejemplo.com" required />
+          </div>
+          <div>
+            <label for="regPass">Contraseña</label>
+            <input type="password" id="regPass" placeholder="Mínimo 8 caracteres" minlength="8" required />
+          </div>
+          <div>
+            <label for="regPass2">Confirmar contraseña</label>
+            <input type="password" id="regPass2" placeholder="Repite tu contraseña" required />
+          </div>
+          <button type="submit" class="btn-submit">Crear cuenta</button>
+        </form>
+
+        <p class="modal__switch">
+          ¿Ya tienes cuenta?
+          <a onclick="switchModal('modalRegistro','modalLogin')">Inicia sesión</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         JS
+    ══════════════════════════════════════════════════════ -->
+    <script>
+    (() => {
+      'use strict';
+
+      /* ═══════════════════════════════════════════════════════
+         1. USUARIOS DEMO (simula base de datos en memoria)
+            En producción esto viviría en el backend.
+      ═══════════════════════════════════════════════════════ */
+      const DB_KEY = 'indaga_users';
+
+      function getUsers() {
+        try { return JSON.parse(localStorage.getItem(DB_KEY)) || []; }
+        catch { return []; }
+      }
+      function saveUsers(users) {
+        localStorage.setItem(DB_KEY, JSON.stringify(users));
+      }
+      function findUser(email) {
+        return getUsers().find(u => u.email.toLowerCase() === email.toLowerCase());
+      }
+      function registerUser(nombre, apellido, email, password) {
+        const users = getUsers();
+        if (findUser(email)) return { ok: false, msg: 'Este correo ya está registrado.' };
+        users.push({ nombre, apellido, email, password });
+        saveUsers(users);
+        return { ok: true };
+      }
+      function loginUser(email, password) {
+        const user = findUser(email);
+        if (!user)              return { ok: false, msg: 'No encontramos una cuenta con ese correo.' };
+        if (user.password !== password) return { ok: false, msg: 'Contraseña incorrecta. Inténtalo de nuevo.' };
+        sessionStorage.setItem('indaga_session', JSON.stringify({ nombre: user.nombre, email: user.email }));
+        return { ok: true, user };
+      }
+
+      /* ═══════════════════════════════════════════════════════
+         2. NAVBAR — sticky con sombra progresiva + active link
+      ═══════════════════════════════════════════════════════ */
+      const nav = document.querySelector('.nav-top');
+
+      // Sombra suave al hacer scroll
+      window.addEventListener('scroll', () => {
+        nav.style.boxShadow = window.scrollY > 10
+          ? '0 4px 20px rgba(15,42,74,.14)'
+          : '0 2px 12px rgba(15,42,74,.08)';
+      }, { passive: true });
+
+      // Resalta el link activo según la sección visible (Intersection Observer)
+      const sections  = document.querySelectorAll('section[id], div[id]');
+      const navAnchors = document.querySelectorAll('.nav-links a');
+
+      const sectionObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            navAnchors.forEach(a => a.classList.remove('active'));
+            const match = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+            if (match) match.classList.add('active');
+          }
+        });
+      }, { threshold: 0.4 });
+
+      sections.forEach(s => sectionObserver.observe(s));
+
+      /* ═══════════════════════════════════════════════════════
+         3. MENÚ MÓVIL — hamburguesa animada
+      ═══════════════════════════════════════════════════════ */
+      const drawer    = document.getElementById('navMobile');
+      const toggleBtn = document.querySelector('.nav-toggle');
+
+      window.toggleMenu = function(btn) {
+        const open = drawer.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(open));
+        // Anima las 3 líneas → X
+        const spans = btn.querySelectorAll('span');
+        if (open) {
+          spans[0].style.transform = 'translateY(7px) rotate(45deg)';
+          spans[1].style.opacity   = '0';
+          spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
+        } else {
+          spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+        }
+      };
+
+      window.closeMobileMenu = function() {
+        drawer.classList.remove('open');
+        const spans = toggleBtn.querySelectorAll('span');
+        spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      };
+
+      /* ═══════════════════════════════════════════════════════
+         4. MODALES — apertura, cierre, swap, trap focus
+      ═══════════════════════════════════════════════════════ */
+      window.openModal = function(id) {
+        const overlay = document.getElementById(id);
+        if (!overlay) return;
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        // Foco en el primer input
+        const firstInput = overlay.querySelector('input');
+        if (firstInput) setTimeout(() => firstInput.focus(), 50);
+      };
+
+      window.closeModal = function(id) {
+        const overlay = document.getElementById(id);
+        if (!overlay) return;
+        overlay.classList.remove('active');
+        clearModalError(id);
+        if (!document.querySelector('.modal-overlay.active')) {
+          document.body.style.overflow = '';
+        }
+      };
+
+      window.overlayClose = function(e, id) {
+        if (e.target === document.getElementById(id)) closeModal(id);
+      };
+
+      window.switchModal = function(closeId, openId) {
+        closeModal(closeId);
+        setTimeout(() => openModal(openId), 180);
+      };
+
+      // Cerrar con Escape
+      document.addEventListener('keydown', e => {
+        if (e.key !== 'Escape') return;
+        document.querySelectorAll('.modal-overlay.active')
+          .forEach(m => closeModal(m.id));
+      });
+
+      /* ═══════════════════════════════════════════════════════
+         5. HELPERS DE VALIDACIÓN Y FEEDBACK EN MODALES
+      ═══════════════════════════════════════════════════════ */
+      function showModalError(modalId, msg) {
+        const modal = document.getElementById(modalId);
+        let errorEl = modal.querySelector('.modal-error');
+        if (!errorEl) {
+          errorEl = document.createElement('p');
+          errorEl.className = 'modal-error';
+          errorEl.style.cssText =
+            'color:#c0392b;background:#fdf0ef;border:1px solid #f5c6c6;' +
+            'border-radius:10px;padding:10px 14px;font-size:13.5px;' +
+            'margin-bottom:4px;animation:fadeIn .2s ease;';
+          const form = modal.querySelector('.modal-form');
+          form.prepend(errorEl);
+        }
+        errorEl.textContent = msg;
+      }
+
+      function clearModalError(modalId) {
+        const el = document.querySelector(`#${modalId} .modal-error`);
+        if (el) el.remove();
+      }
+
+      function setFieldError(input, hasError) {
+        input.style.borderColor = hasError ? '#e05252' : '';
+        input.style.boxShadow   = hasError ? '0 0 0 3px rgba(224,82,82,.12)' : '';
+      }
+
+      function setBtn(btn, state) {
+        // state: 'loading' | 'success' | 'reset'
+        const labels = {
+          'login-loading':    'Verificando…',
+          'login-success':    '¡Entrando! ✓',
+          'registro-loading': 'Creando cuenta…',
+          'registro-success': '¡Cuenta creada! ✓',
+          'contacto-loading': 'Enviando…',
+          'contacto-success': '¡Mensaje enviado! ✓',
+        };
+        if (state === 'reset') {
+          btn.disabled = false;
+          btn.style.background = '';
+          btn.style.transform  = '';
+          return;
+        }
+        btn.textContent = labels[state] || '…';
+        btn.disabled    = true;
+        if (state.endsWith('success')) btn.style.background = '#2e7d4f';
+      }
+
+      /* ═══════════════════════════════════════════════════════
+         6. FORM — INICIAR SESIÓN
+      ═══════════════════════════════════════════════════════ */
+      window.submitLogin = function(e) {
+        e.preventDefault();
+        clearModalError('modalLogin');
+        const emailInput = document.getElementById('loginEmail');
+        const passInput  = document.getElementById('loginPass');
+        const btn        = e.target.querySelector('.btn-submit');
+
+        setFieldError(emailInput, false);
+        setFieldError(passInput, false);
+
+        const email    = emailInput.value.trim();
+        const password = passInput.value;
+
+        // Validación básica de formato
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          setFieldError(emailInput, true);
+          showModalError('modalLogin', 'Ingresa un correo válido.');
+          emailInput.focus();
+          return;
+        }
+        if (password.length < 1) {
+          setFieldError(passInput, true);
+          showModalError('modalLogin', 'Escribe tu contraseña.');
+          passInput.focus();
+          return;
+        }
+
+        setBtn(btn, 'login-loading');
+
+        setTimeout(() => {
+          const result = loginUser(email, password);
+          if (!result.ok) {
+            setBtn(btn, 'reset');
+            btn.textContent = 'Iniciar sesión';
+            showModalError('modalLogin', result.msg);
+            if (result.msg.includes('correo')) setFieldError(emailInput, true);
+            else setFieldError(passInput, true);
+            return;
+          }
+          setBtn(btn, 'login-success');
+          setTimeout(() => { window.location.href = './index.html'; }, 700);
+        }, 900);
+      };
+
+      /* ═══════════════════════════════════════════════════════
+         7. FORM — REGISTRO
+      ═══════════════════════════════════════════════════════ */
+
+      // Indicador de fortaleza de contraseña (en tiempo real)
+      const regPassInput = document.getElementById('regPass');
+      if (regPassInput) {
+        // Crear el elemento indicador
+        const strengthBar = document.createElement('div');
+        strengthBar.innerHTML = `
+          <div style="display:flex;gap:4px;margin-top:6px;">
+            <div class="sb-seg" style="height:4px;flex:1;border-radius:4px;background:#e0e8f0;transition:background .3s;"></div>
+            <div class="sb-seg" style="height:4px;flex:1;border-radius:4px;background:#e0e8f0;transition:background .3s;"></div>
+            <div class="sb-seg" style="height:4px;flex:1;border-radius:4px;background:#e0e8f0;transition:background .3s;"></div>
+            <div class="sb-seg" style="height:4px;flex:1;border-radius:4px;background:#e0e8f0;transition:background .3s;"></div>
+          </div>
+          <p class="sb-label" style="font-size:11px;margin-top:4px;color:#9baebb;font-weight:600;"></p>`;
+        regPassInput.parentNode.appendChild(strengthBar);
+
+        regPassInput.addEventListener('input', () => {
+          const v     = regPassInput.value;
+          const segs  = strengthBar.querySelectorAll('.sb-seg');
+          const label = strengthBar.querySelector('.sb-label');
+          let score   = 0;
+          if (v.length >= 8)             score++;
+          if (/[A-Z]/.test(v))           score++;
+          if (/[0-9]/.test(v))           score++;
+          if (/[^A-Za-z0-9]/.test(v))    score++;
+
+          const colors = ['#e05252','#f7a948','#f7c948','#2e7d4f'];
+          const labels = ['Muy débil','Débil','Buena','Fuerte'];
+          segs.forEach((s, i) => {
+            s.style.background = i < score ? colors[score - 1] : '#e0e8f0';
+          });
+          label.textContent   = v.length ? labels[score - 1] || '' : '';
+          label.style.color   = score > 0 ? colors[score - 1] : '#9baebb';
+        });
+      }
+
+      window.submitRegistro = function(e) {
+        e.preventDefault();
+        clearModalError('modalRegistro');
+
+        const nombre   = document.getElementById('regNombre').value.trim();
+        const apellido = document.getElementById('regApellido').value.trim();
+        const email    = document.getElementById('regEmail').value.trim();
+        const pass     = document.getElementById('regPass').value;
+        const pass2    = document.getElementById('regPass2').value;
+        const btn      = e.target.querySelector('.btn-submit');
+
+        // Limpiar errores previos
+        ['regNombre','regApellido','regEmail','regPass','regPass2'].forEach(id => {
+          setFieldError(document.getElementById(id), false);
+        });
+
+        // Validaciones
+        if (nombre.length < 2) {
+          setFieldError(document.getElementById('regNombre'), true);
+          showModalError('modalRegistro', 'Ingresa tu nombre completo.');
+          document.getElementById('regNombre').focus();
+          return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          setFieldError(document.getElementById('regEmail'), true);
+          showModalError('modalRegistro', 'Ingresa un correo válido.');
+          document.getElementById('regEmail').focus();
+          return;
+        }
+        if (pass.length < 8) {
+          setFieldError(document.getElementById('regPass'), true);
+          showModalError('modalRegistro', 'La contraseña debe tener al menos 8 caracteres.');
+          document.getElementById('regPass').focus();
+          return;
+        }
+        if (pass !== pass2) {
+          setFieldError(document.getElementById('regPass2'), true);
+          showModalError('modalRegistro', 'Las contraseñas no coinciden.');
+          document.getElementById('regPass2').focus();
+          return;
+        }
+
+        setBtn(btn, 'registro-loading');
+
+        setTimeout(() => {
+          const result = registerUser(nombre, apellido, email, pass);
+          if (!result.ok) {
+            setBtn(btn, 'reset');
+            btn.textContent = 'Crear cuenta';
+            setFieldError(document.getElementById('regEmail'), true);
+            showModalError('modalRegistro', result.msg);
+            return;
+          }
+          setBtn(btn, 'registro-success');
+          setTimeout(() => {
+            closeModal('modalRegistro');
+            setBtn(btn, 'reset');
+            btn.textContent = 'Crear cuenta';
+            e.target.reset();
+            // Ofrecer login inmediato
+            setTimeout(() => {
+              document.getElementById('loginEmail').value = email;
+              openModal('modalLogin');
+            }, 300);
+          }, 1800);
+        }, 1000);
+      };
+
+      /* ═══════════════════════════════════════════════════════
+         8. FORM — CONTACTO con validación en tiempo real
+      ═══════════════════════════════════════════════════════ */
+      window.handleSubmit = function(e) {
+        e.preventDefault();
+        const btn = e.target.querySelector('.btn-enviar');
+        setBtn(btn, 'contacto-loading');
+        setTimeout(() => {
+          setBtn(btn, 'contacto-success');
+          setTimeout(() => {
+            setBtn(btn, 'reset');
+            btn.textContent = 'Enviar mensaje';
+            e.target.reset();
+          }, 3000);
+        }, 1200);
+      };
+
+      // Validación inline en tiempo real para el form de contacto
+      document.querySelectorAll('.contacto-form input, .contacto-form textarea').forEach(field => {
+        field.addEventListener('blur', () => {
+          const ok = field.value.trim().length > 0 &&
+            (field.type !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value));
+          field.style.borderColor = ok ? '#2e7d4f' : (field.value ? '#e05252' : '');
+          field.style.boxShadow   = ok
+            ? '0 0 0 3px rgba(46,125,79,.1)'
+            : (field.value ? '0 0 0 3px rgba(224,82,82,.1)' : '');
+        });
+        field.addEventListener('focus', () => {
+          field.style.borderColor = '';
+          field.style.boxShadow   = '';
+        });
+      });
+
+      /* ═══════════════════════════════════════════════════════
+         9. SCROLL — reveal animado con Intersection Observer
+      ═══════════════════════════════════════════════════════ */
+      const revealTargets = document.querySelectorAll(
+        '.oport-card, .fundadora-card, .intro__image, .intro__text, .contacto-form'
+      );
+
+      // Establece estado inicial (invisible + desplazado hacia abajo)
+      revealTargets.forEach(el => {
+        el.style.opacity   = '0';
+        el.style.transform = 'translateY(28px)';
+        el.style.transition = 'opacity .55s ease, transform .55s ease';
+      });
+
+      const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach((entry, i) => {
+          if (!entry.isIntersecting) return;
+          // Escalonado: cada elemento tarda un poco más que el anterior
+          const delay = (i % 3) * 100;
+          setTimeout(() => {
+            entry.target.style.opacity   = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }, delay);
+          revealObserver.unobserve(entry.target);
+        });
+      }, { threshold: 0.12 });
+
+      revealTargets.forEach(el => revealObserver.observe(el));
+
+      /* ═══════════════════════════════════════════════════════
+         10. CONTADOR ANIMADO en el hero (cifras de impacto)
+      ═══════════════════════════════════════════════════════ */
+      function animateCounter(el, target, suffix = '', duration = 1600) {
+        const start     = performance.now();
+        const easeOut   = t => 1 - Math.pow(1 - t, 3);
+        const tick      = now => {
+          const progress = Math.min((now - start) / duration, 1);
+          el.textContent = Math.round(easeOut(progress) * target) + suffix;
+          if (progress < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }
+
+      // Contadores en el hero (añadidos dinámicamente si el elemento existe)
+      const heroContent = document.querySelector('.hero__content');
+      if (heroContent) {
+        const statsEl = document.createElement('div');
+        statsEl.style.cssText =
+          'display:flex;gap:40px;margin-top:8px;flex-wrap:wrap;justify-content:flex-end;';
+        statsEl.innerHTML = `
+          <div style="text-align:right;">
+            <span class="hero-stat" data-target="200" data-suffix="+" style="font-family:'Sora',sans-serif;font-size:32px;font-weight:700;color:#f7c948;">0</span>
+            <p style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px;">oportunidades activas</p>
+          </div>
+          <div style="text-align:right;">
+            <span class="hero-stat" data-target="12" data-suffix="" style="font-family:'Sora',sans-serif;font-size:32px;font-weight:700;color:#f7c948;">0</span>
+            <p style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px;">categorías</p>
+          </div>
+          <div style="text-align:right;">
+            <span class="hero-stat" data-target="500" data-suffix="+" style="font-family:'Sora',sans-serif;font-size:32px;font-weight:700;color:#f7c948;">0</span>
+            <p style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px;">usuarios registrados</p>
+          </div>`;
+        heroContent.appendChild(statsEl);
+
+        // Disparar contadores cuando el hero entre en vista
+        const heroObserver = new IntersectionObserver(entries => {
+          if (!entries[0].isIntersecting) return;
+          document.querySelectorAll('.hero-stat').forEach(stat => {
+            animateCounter(stat, +stat.dataset.target, stat.dataset.suffix);
+          });
+          heroObserver.disconnect();
+        }, { threshold: 0.5 });
+        heroObserver.observe(heroContent);
+      }
+
+      /* ═══════════════════════════════════════════════════════
+         11. SCROLL SUAVE — anclas internas solamente
+      ═══════════════════════════════════════════════════════ */
+      document.addEventListener('click', e => {
+        const a = e.target.closest('a[href^="#"]');
+        if (!a) return;
+        const target = document.querySelector(a.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        closeMobileMenu();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      /* ═══════════════════════════════════════════════════════
+         12. ACTIVE LINK highlight en nav
+      ═══════════════════════════════════════════════════════ */
+      // Estilo inyectado para el link activo
+      const style = document.createElement('style');
+      style.textContent = `
+        .nav-links a.active {
+          color: var(--blue) !important;
+          border-bottom-color: var(--blue) !important;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-4px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `;
+      document.head.appendChild(style);
+
+      /* ═══════════════════════════════════════════════════════
+         13. LAVA LAMP — palabras flotantes con física suave
+      ═══════════════════════════════════════════════════════ */
+      const lavaContainer = document.getElementById('lavaContainer');
+      if (lavaContainer) {
+        const tags = [...lavaContainer.querySelectorAll('[data-lava]')];
+
+        // Espera a que el DOM pinte para leer dimensiones reales
+        requestAnimationFrame(() => {
+          const W = lavaContainer.offsetWidth;
+          const H = lavaContainer.offsetHeight;
+
+          // Inicializa cada tag con posición y velocidad aleatoria
+          const blobs = tags.map(el => {
+            const tw = el.offsetWidth  || 80;
+            const th = el.offsetHeight || 28;
+            // posición inicial: zona perimetral (evita el centro donde está el ícono)
+            const side = Math.floor(Math.random() * 4);
+            let x, y;
+            if (side === 0) { x = Math.random() * (W * 0.35);               y = Math.random() * H; }
+            else if (side === 1) { x = W - tw - Math.random() * (W * 0.35); y = Math.random() * H; }
+            else if (side === 2) { x = Math.random() * W;                   y = Math.random() * (H * 0.3); }
+            else                 { x = Math.random() * W;                   y = H - th - Math.random() * (H * 0.3); }
+
+            // velocidad base lenta + dirección aleatoria
+            const speed = 0.3 + Math.random() * 0.5;
+            const angle = Math.random() * Math.PI * 2;
+
+            el.style.position = 'absolute';
+            el.style.left     = x + 'px';
+            el.style.top      = y + 'px';
+            el.style.zIndex   = '3';
+
+            return {
+              el, tw, th,
+              x, y,
+              vx: Math.cos(angle) * speed,
+              vy: Math.sin(angle) * speed,
+              // zona "prohibida" = centro del contenedor (ícono)
+            };
+          });
+
+          const CX = W / 2;  // centro X
+          const CY = H / 2;  // centro Y
+          const DEAD_R = 90; // radio de zona protegida alrededor del ícono
+
+          function tick() {
+            const W2 = lavaContainer.offsetWidth;
+            const H2 = lavaContainer.offsetHeight;
+
+            blobs.forEach(b => {
+              b.x += b.vx;
+              b.y += b.vy;
+
+              // Rebote en bordes
+              if (b.x < 0)          { b.x = 0;          b.vx *= -1; }
+              if (b.x + b.tw > W2)  { b.x = W2 - b.tw;  b.vx *= -1; }
+              if (b.y < 0)          { b.y = 0;           b.vy *= -1; }
+              if (b.y + b.th > H2)  { b.y = H2 - b.th;  b.vy *= -1; }
+
+              // Repulsión del ícono central
+              const mx = b.x + b.tw / 2;
+              const my = b.y + b.th / 2;
+              const dx = mx - CX;
+              const dy = my - CY;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < DEAD_R) {
+                const force = (DEAD_R - dist) / DEAD_R * 0.4;
+                b.vx += (dx / dist) * force;
+                b.vy += (dy / dist) * force;
+              }
+
+              // Amortiguación suave (simula viscosidad)
+              b.vx *= 0.998;
+              b.vy *= 0.998;
+
+              // Velocidad mínima para que nunca se paren
+              const spd = Math.sqrt(b.vx * b.vx + b.vy * b.vy);
+              if (spd < 0.15) {
+                b.vx = (b.vx / (spd || 1)) * 0.2;
+                b.vy = (b.vy / (spd || 1)) * 0.2;
+              }
+              // Velocidad máxima
+              if (spd > 1.2) {
+                b.vx = (b.vx / spd) * 1.2;
+                b.vy = (b.vy / spd) * 1.2;
+              }
+
+              b.el.style.transform = `translate(${b.x}px, ${b.y}px)`;
+              b.el.style.left = '0';
+              b.el.style.top  = '0';
+            });
+
+            requestAnimationFrame(tick);
+          }
+
+          tick();
+        });
+      }
+
+    })();
+    </script>
+
+  </body>
+</html>
