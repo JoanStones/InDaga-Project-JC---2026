@@ -224,3 +224,41 @@ body {
   transform: translateY(-4px);
   box-shadow: 0 8px 20px rgba(15, 42, 74, 0.15);
 }
+
+.buscador-campo {
+  position: relative;
+  flex: 1;
+}
+
+.buscador-campo input {
+  width: 100%;
+}
+
+.sugerencias {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 6px;
+  list-style: none;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(15, 42, 74, 0.15);
+  overflow: hidden;
+  z-index: 10;
+}
+
+.sugerencias button {
+  width: 100%;
+  text-align: left;
+  padding: 12px 18px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.sugerencias button:hover {
+  background: #eef1f5;
+}
