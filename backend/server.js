@@ -6,6 +6,7 @@ import mongoose from 'mongoose'
 import 'dotenv/config' 
 import authRoutes from './routes/auth.js'
 import oportunidadesRoutes from './routes/oportunidades.js'
+import contactoRoutes from './routes/contacto.js' 
 
 const app = express()
 
@@ -13,6 +14,7 @@ app.use(cors())
 app.use(express.json())
 app.use('/api/auth', authRoutes)
 app.use('/api/oportunidades', oportunidadesRoutes)
+app.use('/api/contacto', contactoRoutes)
 
 app.get('/api/salud', (req, res) => {
   res.json({ ok: true, mensaje: 'Backend de InDaga funcionando' })

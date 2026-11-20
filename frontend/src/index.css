@@ -418,7 +418,6 @@ body {
 }
 .btn-ingresar:hover { background: #1a3f66; transform: translateY(-1px); }
 
-/* Footer */
 .footer { background: #f7c948; padding: 52px 32px 0; }
 .footer__inner {
   max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column;
@@ -437,7 +436,6 @@ body {
 .footer__redes a:hover { background: #0f2a4a; color: #f7c948; transform: translateY(-2px); }
 .footer__copy { text-align: center; font-size: 12px; color: rgba(15, 42, 74, 0.45); padding: 18px 0; }
 
-/* Sección de oportunidades: fondo degradado */
 #oportunidades {
   background: linear-gradient(135deg, #0f2a4a 0%, #1e6fa8 55%, #0f3d6e 100%);
   padding: 80px 0 60px;
@@ -446,7 +444,6 @@ body {
 #oportunidades > p { color: #fff; text-align: center; }
 .grid-oportunidades { max-width: 1100px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); padding: 0 24px; }
 
-/* Tarjetas */
 .oport-card {
   background: #fff; border-radius: 16px; min-height: 220px; padding: 24px;
   display: flex; flex-direction: column; gap: 10px; color: #0f2a4a;
@@ -479,3 +476,22 @@ body {
   transition: background 0.2s, color 0.2s, transform 0.2s;
 }
 .oport-card:hover .oport-card__arrow { background: #f7c948; color: #0f2a4a; transform: translateX(2px); }
+
+.contacto { padding: 60px 24px; max-width: 600px; margin: 0 auto; }
+.contacto h2 { font-family: 'Sora', sans-serif; font-size: 28px; margin-bottom: 20px; color: #0f2a4a; }
+.contacto-form { display: flex; flex-direction: column; gap: 12px; }
+.contacto-form input,
+.contacto-form textarea {
+  padding: 12px 14px; border: 1.5px solid #d6dde5; border-radius: 10px;
+  font-family: 'Inter', sans-serif; font-size: 14px; color: #0f2a4a;
+}
+.contacto-form input:focus,
+.contacto-form textarea:focus { outline: none; border-color: #1e6fa8; }
+.contacto-form button {
+  background: #0f2a4a; color: #fff; padding: 12px; border: none; border-radius: 999px;
+  font-weight: 700; font-size: 14px; cursor: pointer; transition: background 0.18s;
+}
+.contacto-form button:hover { background: #1a3f66; }
+.contacto-form button:disabled { opacity: 0.6; cursor: not-allowed; }
+.contacto-ok { color: #1f7a3d; }
+.contacto-error { color: #b3261e; }
