@@ -33,7 +33,7 @@ function TarjetaOportunidad({ tipo, institucion, nombre, descripcion, fecha, det
           )}
           {enlace && (
             <a href={enlace} target="_blank" rel="noopener noreferrer" className="oport-card__enlace">
-              Ir a la página oficial →
+              Ver convocatoria y postular →
             </a>
           )}
         </div>

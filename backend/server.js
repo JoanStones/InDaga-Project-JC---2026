@@ -1,12 +1,13 @@
 import dns from 'node:dns'
-dns.setServers(['8.8.8.8', '1.1.1.1']) 
+dns.setServers(['8.8.8.8', '1.1.1.1'])
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
-import 'dotenv/config' 
+import 'dotenv/config'
 import authRoutes from './routes/auth.js'
 import oportunidadesRoutes from './routes/oportunidades.js'
-import contactoRoutes from './routes/contacto.js' 
+import contactoRoutes from './routes/contacto.js'
+import chatRoutes from './routes/chat.js'
 
 const app = express()
 
@@ -15,6 +16,7 @@ app.use(express.json())
 app.use('/api/auth', authRoutes)
 app.use('/api/oportunidades', oportunidadesRoutes)
 app.use('/api/contacto', contactoRoutes)
+app.use('/api/chat', chatRoutes)
 
 app.get('/api/salud', (req, res) => {
   res.json({ ok: true, mensaje: 'Backend de InDaga funcionando' })

@@ -7,6 +7,7 @@ import ComoFunciona from './components/comofunciona'
 import Caminos from './components/caminos'
 import Contacto from './components/contacto'
 import Footer from './components/footer'
+import Chatbot from './components/chatbot'
 
 // Dirección del backend. En local es el puerto 3000; al publicar la cambiaremos por la de Render
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
@@ -74,6 +75,7 @@ function App() {
       <Caminos />
       <Contacto />
       <Footer />
+      <Chatbot />
     </>
   )
 }
