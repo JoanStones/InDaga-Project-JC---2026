@@ -390,3 +390,92 @@ body {
   margin: 0 auto 24px;
   padding: 0 40px;
 }
+
+.header {
+  background: #f7c948;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: 0 2px 10px rgba(15, 42, 74, 0.12);
+}
+.header-flex { max-width: 1100px; padding: 0 24px; height: 60px; min-height: 60px; gap: 24px; }
+.header-right { gap: 24px; }
+.logo { font-size: 20px; gap: 7px; letter-spacing: -0.01em; color: #0f2a4a; margin: 0; }
+.logo-icon { height: 1em; width: auto; }
+.nav { display: flex; align-items: center; gap: 2px; }
+.nav a {
+  display: flex; align-items: center; height: 60px; padding: 0 14px;
+  font-weight: 600; font-size: 13.5px; color: #0f2a4a; text-decoration: none;
+  border-bottom: 2px solid transparent; white-space: nowrap; letter-spacing: 0.01em;
+  transition: color 0.18s, border-color 0.18s;
+}
+.nav a:hover { color: #1e6fa8; border-bottom-color: #1e6fa8; }
+.btn-ingresar {
+  background: #0f2a4a; color: #fff; padding: 8px 20px; border-radius: 999px;
+  font-weight: 700; font-size: 13.5px; text-decoration: none;
+  transition: background 0.18s, transform 0.18s;
+}
+.btn-ingresar:hover { background: #1a3f66; transform: translateY(-1px); }
+
+/* Footer */
+.footer { background: #f7c948; padding: 52px 32px 0; }
+.footer__inner {
+  max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column;
+  align-items: center; gap: 14px; padding-bottom: 36px; text-align: center;
+  border-bottom: 1px solid rgba(15, 42, 74, 0.12);
+}
+.footer__inner p { font-size: 13px; color: rgba(15, 42, 74, 0.6); line-height: 1.7; max-width: 320px; }
+.footer__label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(15, 42, 74, 0.45); }
+.footer__redes { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.footer__redes a {
+  display: flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 999px;
+  background: rgba(15, 42, 74, 0.08); border: 1px solid rgba(15, 42, 74, 0.14);
+  color: #0f2a4a; text-decoration: none; font-size: 12.5px; font-weight: 600;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.footer__redes a:hover { background: #0f2a4a; color: #f7c948; transform: translateY(-2px); }
+.footer__copy { text-align: center; font-size: 12px; color: rgba(15, 42, 74, 0.45); padding: 18px 0; }
+
+/* Sección de oportunidades: fondo degradado */
+#oportunidades {
+  background: linear-gradient(135deg, #0f2a4a 0%, #1e6fa8 55%, #0f3d6e 100%);
+  padding: 80px 0 60px;
+}
+#oportunidades h2 { color: #fff; font-size: 32px; margin-top: 0; }
+#oportunidades > p { color: #fff; text-align: center; }
+.grid-oportunidades { max-width: 1100px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); padding: 0 24px; }
+
+/* Tarjetas */
+.oport-card {
+  background: #fff; border-radius: 16px; min-height: 220px; padding: 24px;
+  display: flex; flex-direction: column; gap: 10px; color: #0f2a4a;
+  border-top: 4px solid #0f2a4a; box-shadow: 0 4px 16px rgba(15, 42, 74, 0.1);
+  transition: transform 0.22s, box-shadow 0.22s;
+}
+.oport-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(15, 42, 74, 0.18); }
+.oport-card[data-cat="Beca"]     { border-top-color: #1e6fa8; }
+.oport-card[data-cat="Curso"]    { border-top-color: #2e7d4f; }
+.oport-card[data-cat="Programa"] { border-top-color: #8b5cf6; }
+.oport-card__tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700;
+  padding: 3px 10px; border-radius: 999px; letter-spacing: 0.06em; text-transform: uppercase;
+  background: #f4f6f9; color: #0f2a4a;
+}
+.oport-card[data-cat="Beca"]     .oport-card__tag { background: #dbeafe; color: #1e6fa8; }
+.oport-card[data-cat="Curso"]    .oport-card__tag { background: #dcfce7; color: #2e7d4f; }
+.oport-card[data-cat="Programa"] .oport-card__tag { background: #ede9fe; color: #7c3aed; }
+.oport-card__title { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 15px; line-height: 1.4; margin: 0; }
+.oport-card__institution { font-size: 11.5px; font-weight: 600; color: #1e6fa8; margin: 0; }
+.oport-card__desc { font-size: 13px; line-height: 1.65; color: #5a7080; flex: 1; margin: 0; }
+.oport-card__footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 12px; border-top: 1px solid #eef1f5;
+}
+.oport-card__sub { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: #1e6fa8; font-weight: 600; }
+.oport-card__arrow {
+  width: 28px; height: 28px; border-radius: 50%; background: #0f2a4a; color: #fff;
+  display: flex; align-items: center; justify-content: center; font-size: 12px;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.oport-card:hover .oport-card__arrow { background: #f7c948; color: #0f2a4a; transform: translateX(2px); }
