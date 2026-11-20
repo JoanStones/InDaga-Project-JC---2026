@@ -83,5 +83,45 @@
     </div>
   </div>
 </footer>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ── Detectar sesión activa ─────────────────────────── */
+  const session = (() => {
+    try { return JSON.parse(sessionStorage.getItem('indaga_session')); }
+    catch { return null; }
+  })();
+
+  if (!session) {
+    // Sin sesión → redirigir al landing
+    window.location.replace('./landing.html');
+    return;
+  }
+
+  /* ── Mostrar nombre del usuario en el header ────────── */
+  const ingreBtn = document.querySelector('.btn-ingresar');
+  if (ingreBtn) {
+    ingreBtn.textContent = `Hola, ${session.nombre} · Salir`;
+    ingreBtn.href = '#';
+    ingreBtn.style.background = '#2e7d4f';
+    ingreBtn.addEventListener('click', e => {
+      e.preventDefault();
+      sessionStorage.removeItem('indaga_session');
+      window.location.href = './landing.html';
+    });
+  }
+
+  /* ── Filtros de oportunidades ───────────────────────── */
+  document.querySelectorAll('.filtro').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filtro').forEach(b => b.classList.remove('filtro--activo'));
+      btn.classList.add('filtro--activo');
+    });
+  });
+
+})();
+</script>
 </body>
 </html>
