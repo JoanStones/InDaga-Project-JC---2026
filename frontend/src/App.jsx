@@ -1,23 +1,36 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './components/header'
 import Hero from './components/hero'
 import Oportunidades from './components/oportunidades'
+import Slogan from './components/slogan'
+import ComoFunciona from './components/comofunciona'
+import Caminos from './components/caminos'
+import Contacto from './components/contacto'
 import Footer from './components/footer'
 
-const oportunidades = [
-  { id: 1, tipo: 'Programa', institucion: 'Senacyt', nombre: 'Becas de investigación',
-    descripcion: 'Financiamiento para proyectos de investigación aplicada.',
-    fecha: 'Inicia: 01/09 — Vence: 30/09' },
-  { id: 2, tipo: 'Curso', institucion: 'Institución (ejemplo)', nombre: 'Curso de ejemplo',
-    descripcion: 'Descripción de ejemplo.', fecha: 'Fecha de ejemplo' },
-  { id: 3, tipo: 'Beca', institucion: 'Institución (ejemplo)', nombre: 'Beca de ejemplo',
-    descripcion: 'Descripción de ejemplo.', fecha: 'Fecha de ejemplo' },
-]
+// Dirección del backend. En local es el puerto 3000; al publicar la cambiaremos por la de Render
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
 
 function App() {
+  const [oportunidades, setOportunidades] = useState([])
+  const [cargando, setCargando] = useState(true)
+  const [error, setError] = useState('')
   const [filtro, setFiltro] = useState('Todas')
   const [busqueda, setBusqueda] = useState('')
 
+  // useEffect con [] se ejecuta una sola vez, al cargar la página: pide las oportunidades al backend
+  useEffect(() => {
+    fetch(`${API_URL}/oportunidades`)
+      .then((res) => {
+        if (!res.ok) throw new Error('Respuesta inválida')
+        return res.json()
+      })
+      .then((datos) => setOportunidades(datos))
+      .catch(() => setError('No pudimos cargar las oportunidades. Inténtalo de nuevo más tarde.'))
+      .finally(() => setCargando(false))
+  }, [])
+
+  // Se queda con las oportunidades que cumplen el tipo Y contienen el texto buscado
   const visibles = oportunidades.filter((o) => {
     const coincideTipo = filtro === 'Todas' || o.tipo === filtro
     const texto = `${o.nombre} ${o.institucion} ${o.descripcion}`.toLowerCase()
@@ -25,6 +38,7 @@ function App() {
     return coincideTipo && coincideTexto
   })
 
+  
   const sugerencias =
     busqueda.trim() === ''
       ? []
@@ -40,7 +54,17 @@ function App() {
     <>
       <Header />
       <Hero busqueda={busqueda} setBusqueda={setBusqueda} sugerencias={sugerencias} />
-      <Oportunidades lista={visibles} filtro={filtro} setFiltro={setFiltro} />
+      <Oportunidades
+        lista={visibles}
+        filtro={filtro}
+        setFiltro={setFiltro}
+        cargando={cargando}
+        error={error}
+      />
+      <Slogan />
+      <ComoFunciona />
+      <Caminos />
+      <Contacto />
       <Footer />
     </>
   )
