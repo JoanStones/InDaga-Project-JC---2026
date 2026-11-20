@@ -1,0 +1,26 @@
+import dns from 'node:dns'
+dns.setServers(['8.8.8.8', '1.1.1.1']) 
+import express from 'express'
+import cors from 'cors'
+import mongoose from 'mongoose'
+import 'dotenv/config' 
+console.log('MONGO_URI cargada:', Boolean(process.env.MONGO_URI))
+
+const app = express()
+
+app.use(cors())
+app.use(express.json())
+
+app.get('/api/salud', (req, res) => {
+  res.json({ ok: true, mensaje: 'Backend de InDaga funcionando' })
+})
+
+const PORT = process.env.PORT || 3000
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log('Conectado a MongoDB')
+    app.listen(PORT, () => console.log(`Servidor en http://localhost:${PORT}`))
+  })
+  .catch((error) => console.error('Error al conectar con MongoDB:', error.message))
