@@ -4,12 +4,13 @@ import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import 'dotenv/config' 
-console.log('MONGO_URI cargada:', Boolean(process.env.MONGO_URI))
+import authRoutes from './routes/auth.js'
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
+app.use('/api/auth', authRoutes)
 
 app.get('/api/salud', (req, res) => {
   res.json({ ok: true, mensaje: 'Backend de InDaga funcionando' })
