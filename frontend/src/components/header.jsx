@@ -1,6 +1,16 @@
 import logo from '../assets/InDaga-Icon.svg'
 
 function Header() {
+  // El login guardó el usuario en localStorage; lo leemos para saludarlo
+  const usuario = JSON.parse(localStorage.getItem('indaga_usuario') || 'null')
+
+  // Cerrar sesión: borramos el token y volvemos a la landing
+  const cerrarSesion = () => {
+    localStorage.removeItem('indaga_token')
+    localStorage.removeItem('indaga_usuario')
+    window.location.href = `${import.meta.env.BASE_URL}landing.html`
+  }
+
   return (
     <header className="header">
       <div className="header-flex">
@@ -14,7 +24,8 @@ function Header() {
             <a href="#empresas">Para empresas</a>
             <a href="#nosotros">Nosotros</a>
           </nav>
-          <a href="#ingresar" className="btn-ingresar">Ingresar</a>
+          <span className="saludo">Hola, {usuario?.nombre}</span>
+          <button className="btn-ingresar" onClick={cerrarSesion}>Cerrar sesión</button>
         </div>
       </div>
     </header>

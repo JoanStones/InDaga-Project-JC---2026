@@ -1,4 +1,9 @@
-function TarjetaOportunidad({ tipo, institucion, nombre, descripcion, fecha }) {
+import { useState } from 'react'
+
+function TarjetaOportunidad({ tipo, institucion, nombre, descripcion, fecha, detalles, requisitos, enlace }) {
+  // abierta = true muestra el detalle; el botón de la flecha la cambia
+  const [abierta, setAbierta] = useState(false)
+
   return (
     <div className="oport-card" data-cat={tipo}>
       <div><span className="oport-card__tag">{tipo}</span></div>
@@ -7,8 +12,32 @@ function TarjetaOportunidad({ tipo, institucion, nombre, descripcion, fecha }) {
       <p className="oport-card__desc">{descripcion}</p>
       <div className="oport-card__footer">
         <span className="oport-card__sub">{fecha}</span>
-        <span className="oport-card__arrow">→</span>
+        <button
+          className="oport-card__arrow"
+          onClick={() => setAbierta(!abierta)}
+          aria-expanded={abierta}
+          aria-label={abierta ? 'Ocultar detalles' : 'Ver detalles'}
+        >
+          {abierta ? '↑' : '↓'}
+        </button>
       </div>
+
+      {abierta && (
+        <div className="oport-card__detalle">
+          {detalles && <p>{detalles}</p>}
+          {requisitos && (
+            <>
+              <h4>Requisitos</h4>
+              <p>{requisitos}</p>
+            </>
+          )}
+          {enlace && (
+            <a href={enlace} target="_blank" rel="noopener noreferrer" className="oport-card__enlace">
+              Ir a la página oficial →
+            </a>
+          )}
+        </div>
+      )}
     </div>
   )
 }

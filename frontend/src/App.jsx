@@ -30,6 +30,12 @@ function App() {
       .finally(() => setCargando(false))
   }, [])
 
+  // Si no hay token guardado (no inició sesión), la mandamos a la landing
+  const logueado = Boolean(localStorage.getItem('indaga_token'))
+  useEffect(() => {
+    if (!logueado) window.location.href = `${import.meta.env.BASE_URL}landing.html`
+  }, [logueado])
+
   // Se queda con las oportunidades que cumplen el tipo Y contienen el texto buscado
   const visibles = oportunidades.filter((o) => {
     const coincideTipo = filtro === 'Todas' || o.tipo === filtro
@@ -49,6 +55,8 @@ function App() {
               s.toLowerCase() !== busqueda.toLowerCase()
           )
           .slice(0, 5)
+
+  if (!logueado) return null // mientras redirige no mostramos nada
 
   return (
     <>

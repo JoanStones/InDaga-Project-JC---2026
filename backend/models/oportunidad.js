@@ -8,6 +8,9 @@ const oportunidadSchema = new mongoose.Schema(
     nombre: { type: String, required: true, trim: true },
     descripcion: { type: String, required: true, trim: true },
     fecha: { type: String, required: true, trim: true }, // texto libre: "Inicia: 01/09 — Vence: 30/09"
+    detalles: { type: String, trim: true, default: '' }, // explicación larga de la beca
+    requisitos: { type: String, trim: true, default: '' },
+    enlace: { type: String, trim: true, default: '' }, // página oficial para postular
   },
   // virtuals: true hace que cada documento incluya un campo "id", que usa tu frontend
   { timestamps: true, toJSON: { virtuals: true, versionKey: false } }

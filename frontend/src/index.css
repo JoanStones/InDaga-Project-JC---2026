@@ -495,3 +495,24 @@ body {
 .contacto-form button:disabled { opacity: 0.6; cursor: not-allowed; }
 .contacto-ok { color: #1f7a3d; }
 .contacto-error { color: #b3261e; }
+
+.btn-ingresar { border: none; cursor: pointer; font-family: inherit; }
+.saludo { font-size: 13.5px; font-weight: 600; color: #0f2a4a; white-space: nowrap; }
+
+.btn-ingresar { border: none; cursor: pointer; font-family: inherit; }
+.saludo { font-size: 13.5px; font-weight: 600; color: #0f2a4a; white-space: nowrap; }
+
+.grid-oportunidades { align-items: start; } /* una tarjeta abierta no estira a las demás */
+.oport-card__arrow { border: none; cursor: pointer; font-family: inherit; }
+.oport-card__detalle {
+  border-top: 1px solid #eef1f5; padding-top: 12px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.oport-card__detalle p { font-size: 13px; line-height: 1.65; color: #5a7080; margin: 0; }
+.oport-card__detalle h4 { font-family: 'Sora', sans-serif; font-size: 13px; color: #0f2a4a; margin: 4px 0 0; }
+.oport-card__enlace {
+  align-self: flex-start; margin-top: 6px; background: #f7c948; color: #0f2a4a;
+  padding: 9px 18px; border-radius: 999px; font-weight: 700; font-size: 13px;
+  text-decoration: none; transition: transform 0.18s;
+}
+.oport-card__enlace:hover { transform: translateY(-2px); }
