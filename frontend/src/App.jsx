@@ -8,6 +8,7 @@ import Caminos from './components/caminos'
 import Contacto from './components/contacto'
 import Footer from './components/footer'
 import Chatbot from './components/chatbot'
+import Admin from './components/admin'
 
 // Dirección del backend. En local es el puerto 3000; al publicar la cambiaremos por la de Render
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
@@ -18,9 +19,10 @@ function App() {
   const [error, setError] = useState('')
   const [filtro, setFiltro] = useState('Todas')
   const [busqueda, setBusqueda] = useState('')
+  const [vista, setVista] = useState('inicio') // 'inicio' o 'admin'
 
-  // useEffect con [] se ejecuta una sola vez, al cargar la página: pide las oportunidades al backend
-  useEffect(() => {
+  // Pide las oportunidades al backend (también se usa para refrescar después de crear/borrar en el admin)
+  const cargar = () => {
     fetch(`${API_URL}/oportunidades`)
       .then((res) => {
         if (!res.ok) throw new Error('Respuesta inválida')
@@ -29,6 +31,11 @@ function App() {
       .then((datos) => setOportunidades(datos))
       .catch(() => setError('No pudimos cargar las oportunidades. Inténtalo de nuevo más tarde.'))
       .finally(() => setCargando(false))
+  }
+
+  // useEffect con [] se ejecuta una sola vez, al cargar la página
+  useEffect(() => {
+    cargar()
   }, [])
 
   // Si no hay token guardado (no inició sesión), la mandamos a la landing
@@ -59,9 +66,20 @@ function App() {
 
   if (!logueado) return null // mientras redirige no mostramos nada
 
+  // Vista del administrador (el backend vuelve a comprobar el rol en cada petición)
+  if (vista === 'admin') {
+    return (
+      <>
+        <Header vista={vista} setVista={setVista} />
+        <Admin oportunidades={oportunidades} recargar={cargar} />
+        <Footer />
+      </>
+    )
+  }
+
   return (
     <>
-      <Header />
+      <Header vista={vista} setVista={setVista} />
       <Hero busqueda={busqueda} setBusqueda={setBusqueda} sugerencias={sugerencias} />
       <Oportunidades
         lista={visibles}

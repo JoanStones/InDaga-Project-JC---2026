@@ -1,6 +1,6 @@
 import logo from '../assets/InDaga-Icon.svg'
 
-function Header() {
+function Header({ vista = 'inicio', setVista = () => {} }) {
   // El login guardó el usuario en localStorage; lo leemos para saludarlo
   const usuario = JSON.parse(localStorage.getItem('indaga_usuario') || 'null')
 
@@ -24,6 +24,11 @@ function Header() {
             <a href="#empresas">Para empresas</a>
             <a href="#nosotros">Nosotros</a>
           </nav>
+          {usuario?.rol === 'admin' && (
+            <button className="btn-admin" onClick={() => setVista(vista === 'admin' ? 'inicio' : 'admin')}>
+              {vista === 'admin' ? 'Volver al sitio' : 'Panel admin'}
+            </button>
+          )}
           <span className="saludo">Hola, {usuario?.nombre}</span>
           <button className="btn-ingresar" onClick={cerrarSesion}>Cerrar sesión</button>
         </div>

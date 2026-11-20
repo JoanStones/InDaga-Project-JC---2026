@@ -59,27 +59,60 @@ router.post('/', requiereLogin, async (req, res) => {
       generationConfig: { temperature: 0.4, maxOutputTokens: 1500 },
     }
 
-    // Si un modelo no está disponible, probamos el siguiente
-    const modelos = [...new Set([process.env.GEMINI_MODEL, 'gemini-2.5-flash', 'gemini-2.0-flash'].filter(Boolean))]
+    // Modelos a probar: el del .env primero, luego los que Google tenga disponibles (se descubren solos)
+    const base = 'https://generativelanguage.googleapis.com/v1beta'
+    const cabeceras = { 'Content-Type': 'application/json', 'x-goog-api-key': process.env.GEMINI_API_KEY }
+    let modelos = [process.env.GEMINI_MODEL, 'gemini-2.5-flash'].filter(Boolean)
     let ultimoError = ''
 
-    for (const modelo of modelos) {
-      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent`, {
+    async function intentar(modelo) {
+      const r = await fetch(`${base}/models/${modelo}:generateContent`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-goog-api-key': process.env.GEMINI_API_KEY },
+        headers: cabeceras,
         body: JSON.stringify(cuerpo),
+        signal: AbortSignal.timeout(25000), // si Gemini no responde en 25 s, seguimos con otro
       })
-
       if (r.ok) {
         const data = await r.json()
         const texto = data.candidates?.[0]?.content?.parts?.map((p) => p.text || '').join('').trim()
-        if (texto) return res.json({ respuesta: texto })
+        if (texto) return texto
         ultimoError = `${modelo}: respuesta vacía`
-        continue
+        return null
       }
-
       ultimoError = `${modelo}: ${r.status} ${(await r.text()).slice(0, 200)}`
-      if (![400, 404, 429, 503].includes(r.status)) break // 401/403: problema con la clave, no tiene sentido seguir
+      return null
+    }
+
+    for (const modelo of modelos) {
+      try {
+        const texto = await intentar(modelo)
+        if (texto) return res.json({ respuesta: texto })
+      } catch (e) {
+        ultimoError = `${modelo}: ${e.message}`
+      }
+    }
+
+    // Si ninguno funcionó, le preguntamos a Google qué modelos "flash" existen y probamos hasta 3
+    try {
+      const lista = await fetch(`${base}/models?pageSize=100`, { headers: cabeceras, signal: AbortSignal.timeout(10000) })
+      if (lista.ok) {
+        const { models = [] } = await lista.json()
+        const nuevos = models
+          .filter((m) => m.supportedGenerationMethods?.includes('generateContent'))
+          .map((m) => m.name.replace('models/', ''))
+          .filter((n) => n.includes('flash') && !/image|tts|live|audio|thinking|preview/.test(n) && !modelos.includes(n))
+          .slice(0, 3)
+        for (const modelo of nuevos) {
+          try {
+            const texto = await intentar(modelo)
+            if (texto) return res.json({ respuesta: texto })
+          } catch (e) {
+            ultimoError = `${modelo}: ${e.message}`
+          }
+        }
+      }
+    } catch (e) {
+      ultimoError += ` | lista de modelos: ${e.message}`
     }
 
     console.error('Gemini falló →', ultimoError)

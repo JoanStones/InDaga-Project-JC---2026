@@ -8,6 +8,7 @@ import authRoutes from './routes/auth.js'
 import oportunidadesRoutes from './routes/oportunidades.js'
 import contactoRoutes from './routes/contacto.js'
 import chatRoutes from './routes/chat.js'
+import adminRoutes from './routes/admin.js'
 
 const app = express()
 
@@ -17,6 +18,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/oportunidades', oportunidadesRoutes)
 app.use('/api/contacto', contactoRoutes)
 app.use('/api/chat', chatRoutes)
+app.use('/api/admin', adminRoutes)
 
 app.get('/api/salud', (req, res) => {
   res.json({ ok: true, mensaje: 'Backend de InDaga funcionando' })
