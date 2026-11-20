@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import Mensaje from '../models/mensaje.js'
+import Mensaje from '../models/Mensaje.js'
 import { requiereAdmin } from '../middleware/auth.js'
 
 const router = Router()
