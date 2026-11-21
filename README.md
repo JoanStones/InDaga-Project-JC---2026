@@ -6,8 +6,8 @@ Plataforma gratuita que reúne **becas, cursos y programas** para jóvenes en Pa
 
 ## Enlaces
 
-- Aplicación publicada: _(pegar aquí el enlace de GitHub Pages)_
-- API (backend): _(pegar aquí el enlace de Render)_
+- Aplicación publicada: https://joanstones.github.io/InDaga-Project-JC---2026/landing.html
+- API (backend): https://indaga-project-jc-2026.onrender.com
 
 ## Qué incluye
 
